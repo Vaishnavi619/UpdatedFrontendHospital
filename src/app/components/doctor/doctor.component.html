@@ -1,0 +1,85 @@
+<!-- <div class="container mt-4">
+  <h2 class="text-center mb-4">Doctor Management</h2>
+
+  <!-- ✅ Success Message 
+  <div *ngIf="showSuccess" class="alert alert-success text-center" role="alert">
+    Doctor {{ isEditing ? 'updated' : 'added' }} successfully!
+  </div>
+
+  <!-- ✅ Add/Update Form 
+  <form (ngSubmit)="submitDoctor()" class="card p-4 shadow-sm mb-4">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Doctor Name"
+          [(ngModel)]="currentDoctor.doctorName"
+          name="doctorName"
+          required
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Specialization"
+          [(ngModel)]="currentDoctor.specialization"
+          name="specialization"
+          required
+        />
+      </div>
+      <div class="col-md-2">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Experience"
+          [(ngModel)]="currentDoctor.experience"
+          name="experience"
+          required
+        />
+      </div>
+      <div class="col-md-2">
+        <input
+          type="time"
+          class="form-control"
+          [(ngModel)]="currentDoctor.timings"
+          name="timings"
+          required
+        />
+      </div>
+      <div class="col-md-2 text-end">
+        <button type="submit" class="btn btn-success w-100">
+          {{ isEditing ? 'Update' : 'Add' }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+   ✅ Doctor List 
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Specialization</th>
+        <th>Experience</th>
+        <th>Timings</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let doctor of doctors">
+        <td>{{ doctor.doctorId }}</td>
+        <td>{{ doctor.doctorName }}</td>
+        <td>{{ doctor.specialization }}</td>
+        <td>{{ doctor.experience }}</td>
+        <td>{{ doctor.timings }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="editDoctor(doctor)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteDoctor(doctor.doctorId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->

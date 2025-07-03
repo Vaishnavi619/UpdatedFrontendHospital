@@ -1,0 +1,22 @@
+<div class="container py-4">
+  <h2 class="text-center text-success mb-4">Create Prescription</h2>
+
+  <form [formGroup]="prescriptionForm" (ngSubmit)="onSubmit()" class="w-50 mx-auto">
+    <div class="mb-3">
+      <label for="diagnosis" class="form-label">Diagnosis *</label>
+      <input type="text" class="form-control" formControlName="diagnosis" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="advice" class="form-label">Advice</label>
+      <textarea class="form-control" formControlName="advice" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="date" class="form-label">Date *</label>
+      <input type="date" class="form-control" formControlName="date" required>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100" [disabled]="prescriptionForm.invalid">Submit</button>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+<div class="container mt-4" *ngIf="patientForm">
+  <h3 class="text-center text-success mb-4">Update Patient</h3>
+
+  <form [formGroup]="patientForm" (ngSubmit)="updatePatient()">
+    <div class="mb-3">
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-control" formControlName="fullName">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Age</label>
+      <input type="number" class="form-control" formControlName="age">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Gender</label>
+      <input type="text" class="form-control" formControlName="gender">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Phone</label>
+      <input type="text" class="form-control" formControlName="phone">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Address</label>
+      <input type="text" class="form-control" formControlName="address">
+    </div>
+    <button class="btn btn-primary" type="submit">Update</button>
+  </form>
+</div>

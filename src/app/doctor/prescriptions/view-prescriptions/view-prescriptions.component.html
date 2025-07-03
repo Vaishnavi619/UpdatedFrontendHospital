@@ -1,0 +1,45 @@
+<div class="container py-4">
+  <h3 class="text-center text-primary mb-4">All Prescriptions</h3>
+
+  <div *ngIf="prescriptions.length > 0; else noPrescriptions">
+    <table class="table table-bordered table-striped text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Diagnosis</th>
+          <th>Advice</th>
+          <th>Date</th>
+          <th>Actions</th> <!-- ✅ Add column for buttons -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prescription of prescriptions">
+          <td>{{ prescription.prescriptionId }}</td>
+          <td>{{ prescription.diagnosis }}</td>
+          <td>{{ prescription.advice }}</td>
+          <td>{{ prescription.date }}</td>
+          <td>
+            <button 
+              class="btn btn-sm btn-warning me-2"
+              [routerLink]="['/doctor/prescriptions/update', prescription.prescriptionId]">
+              Update
+            </button>
+
+            <button class="btn btn-outline-danger"
+        type="button"
+        (click)="deletePrescription(prescription.prescriptionId)">
+  Delete
+</button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noPrescriptions>
+    <div class="alert alert-warning text-center">
+      No prescriptions found.
+    </div>
+  </ng-template>
+</div>

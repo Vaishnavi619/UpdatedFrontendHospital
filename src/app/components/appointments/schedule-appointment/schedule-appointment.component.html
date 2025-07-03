@@ -1,0 +1,75 @@
+<div class="container mt-5">
+  <h2>Schedule Appointment</h2>
+
+  <form (ngSubmit)="onSubmit()" #appointmentForm="ngForm">
+
+    <!-- Doctor ID -->
+    <div class="mb-3">
+      <label for="doctorId" class="form-label">Doctor ID</label>
+      <input
+        type="number"
+        id="doctorId"
+        name="doctorId"
+        class="form-control"
+        required
+        [(ngModel)]="appointment.doctor.doctorId"
+      />
+    </div>
+
+    <!-- Patient ID -->
+    <div class="mb-3">
+      <label for="patientId" class="form-label">Patient ID</label>
+      <input
+        type="number"
+        id="patientId"
+        name="patientId"
+        class="form-control"
+        required
+        [(ngModel)]="appointment.patient.patientId"
+      />
+    </div>
+
+    <!-- Appointment Date -->
+    <div class="mb-3">
+      <label for="appointmentDate" class="form-label">Appointment Date</label>
+      <input
+        type="date"
+        id="appointmentDate"
+        name="appointmentDate"
+        class="form-control"
+        required
+        [(ngModel)]="appointment.appointmentDate"
+      />
+    </div>
+
+    <!-- Appointment Time -->
+    <div class="mb-3">
+      <label for="appointmentTime" class="form-label">Appointment Time</label>
+      <input
+        type="time"
+        id="appointmentTime"
+        name="appointmentTime"
+        class="form-control"
+        required
+        [(ngModel)]="appointment.appointmentTime"
+      />
+    </div>
+
+    <!-- Reason -->
+    <div class="mb-3">
+      <label for="reason" class="form-label">Reason</label>
+      <textarea
+        id="reason"
+        name="reason"
+        rows="3"
+        class="form-control"
+        required
+        [(ngModel)]="appointment.reason"
+      ></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!appointmentForm.valid">
+      Submit
+    </button>
+  </form>
+</div>

@@ -1,0 +1,79 @@
+<div class="container py-5">
+  <h2 class="text-center text-primary mb-4">Welcome, {{ role }} 🎉</h2>
+
+  <!-- ADMIN Section -->
+  <div *ngIf="role === 'ADMIN'" class="row g-4 justify-content-center">
+    <div class="col-md-4" *ngFor="let item of adminItems">
+      <div class="card shadow-sm border-primary h-100 text-center">
+        <div class="card-body">
+          <i class="bi bi-person-badge fs-1 text-primary mb-3"></i>
+          <h5 class="card-title">{{ item.label }}</h5>
+          <a [routerLink]="item.link" class="btn btn-outline-primary mt-2 w-100">Go</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOCTOR Section -->
+<div *ngIf="role === 'DOCTOR'" class="row g-4 justify-content-center">
+  <!-- View Appointments -->
+  <div class="col-md-4">
+    <div class="card shadow-sm border-warning h-100 text-center">
+      <div class="card-body">
+        <i class="bi bi-calendar-check fs-1 text-warning mb-3"></i>
+        <h5 class="card-title">View Appointments</h5>
+        <a routerLink="/doctor/view-appointments" class="btn btn-outline-warning mt-2 w-100">Go</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prescriptions -->
+  <div class="col-md-4">
+    <div class="card shadow-sm border-success h-100 text-center">
+      <div class="card-body">
+        <i class="bi bi-file-earmark-medical fs-1 text-success mb-3"></i>
+        <h5 class="card-title">Prescriptions</h5>
+        <a routerLink="/doctor/prescriptions" class="btn btn-outline-success mt-2 w-100">Go</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prescription Items -->
+  <div class="col-md-4">
+    <div class="card shadow-sm border-primary h-100 text-center">
+      <div class="card-body">
+        <i class="bi bi-list-check fs-1 text-primary mb-3"></i>
+        <h5 class="card-title">Prescription Items</h5>
+        <a routerLink="/doctor/prescription-items" class="btn btn-outline-primary mt-2 w-100">Go</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- RECEPTIONIST Section -->
+  <div *ngIf="role === 'RECEPTIONIST'" class="row g-4 justify-content-center">
+    <div class="col-md-4" *ngFor="let item of receptionistItems">
+      <div class="card shadow-sm border-success h-100 text-center">
+        <div class="card-body">
+          <i class="bi bi-building fs-1 text-success mb-3"></i>
+          <h5 class="card-title">{{ item.label }}</h5>
+          <a [routerLink]="item.link" class="btn btn-outline-success mt-2 w-100">Go</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATIENT Section -->
+  <div *ngIf="role === 'PATIENT'" class="row g-4 justify-content-center">
+    <div class="col-md-4" *ngFor="let item of patientItems">
+      <div class="card shadow-sm border-info h-100 text-center">
+        <div class="card-body">
+          <i class="bi bi-heart-pulse fs-1 text-info mb-3"></i>
+          <h5 class="card-title">{{ item.label }}</h5>
+          <a [routerLink]="item.link" class="btn btn-outline-info mt-2 w-100">Go</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
