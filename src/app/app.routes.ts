@@ -25,6 +25,15 @@ import { UpdatePrescriptionComponent } from './doctor/prescriptions/update-presc
 import { DoctorDashboardComponent } from './admin/doctor-dashboard/doctor-dashboard.component';
 import { RegisterDoctorComponent } from './admin/register-doctor/register-doctor.component';
 import { ViewDoctorsComponent } from './admin/view-doctors/view-doctors.component';
+import { UpdateDoctorComponent } from './admin/update-doctor/update-doctor.component';
+import { MedicineDashboardComponent } from './admin/medicine-dashboard/medicine-dashboard.component';
+import { AddMedicineComponent } from './admin/add-medicine/add-medicine.component';
+import { ViewMedicinesComponent } from './admin/view-medicines/view-medicines.component';
+import { UpdateMedicineComponent } from './admin/update-medicine/update-medicine.component';
+
+
+
+
 export const routes: Routes = [
 
   { path: '', component: HomeComponent },
@@ -53,7 +62,14 @@ export const routes: Routes = [
 {path: 'doctor/prescriptions/update/:prescriptionId',component: UpdatePrescriptionComponent},
 { path: 'admin/doctor-dashboard',component: DoctorDashboardComponent},
 {path: 'admin/register-doctor',component: RegisterDoctorComponent},
-{ path: 'admin/view-doctors',component: ViewDoctorsComponent}
+{ path: 'admin/view-doctors',component: ViewDoctorsComponent},
+{path: 'admin/update-doctor/:doctorId',component: UpdateDoctorComponent},
+{ path: 'admin/medicine-dashboard',component: MedicineDashboardComponent,title: 'Medicine Dashboard'},
+{path: 'admin/add-medicine',component: AddMedicineComponent,title: 'Add Medicine'},
+{path: 'admin/view-medicines',component: ViewMedicinesComponent,title: 'View Medicines'},
+{path: 'admin/update-medicine/:medicineId',component: UpdateMedicineComponent,title: 'Update Medicine'}
+
+
 
 
 

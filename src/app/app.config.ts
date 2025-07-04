@@ -24,11 +24,12 @@ export const appConfig: ApplicationConfig = {
     },
 
     // ✅ Provide modules used in templates (like formGroup, routerLink, ngIf, ngFor etc.)
-    importProvidersFrom(
-      CommonModule,
-      FormsModule,
-      ReactiveFormsModule,
-      RouterModule
-    )
+   importProvidersFrom(
+  RouterModule,
+  FormsModule,
+  ReactiveFormsModule,
+  CommonModule
+)
+
   ]
 };

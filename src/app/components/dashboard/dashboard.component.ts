@@ -14,8 +14,8 @@ export class DashboardComponent {
 
   adminItems = [
     { label: 'Patient Dashboard', link: '/patients' },
-    { label: 'Medicine Dashboard', link: '/medicines' },
-     { label: 'Doctor Dashboard', link: '/admin/doctor-dashboard' }
+    { label: 'Doctor Dashboard', link: '/admin/doctor-dashboard' },
+    { label: 'Medicine Dashboard', link: '/admin/medicine-dashboard' },
   ];
 
   doctorItems = [
