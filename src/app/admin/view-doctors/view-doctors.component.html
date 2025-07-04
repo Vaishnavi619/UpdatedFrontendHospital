@@ -1,0 +1,24 @@
+<div class="container py-4">
+  <h2 class="text-center text-info mb-4">List of Doctors</h2>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Specialization</th>
+        <th>Phone</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let doctor of doctors; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ doctor.doctorName }}</td>
+        <td>{{ doctor.specialization }}</td>
+        <td>{{ doctor.experience }}</td>
+        <td>{{ doctor.timings }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

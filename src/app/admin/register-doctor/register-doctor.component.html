@@ -1,0 +1,27 @@
+<div class="container py-4">
+  <h2 class="text-center text-primary mb-4">Register Doctor</h2>
+
+  <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="doctorName">Doctor Name</label>
+      <input type="text" class="form-control" formControlName="doctorName">
+    </div>
+
+    <div class="mb-3">
+      <label for="specialization">Specialization</label>
+      <input type="text" class="form-control" formControlName="specialization">
+    </div>
+
+    <div class="mb-3">
+      <label for="experience">Experience</label>
+      <input type="text" class="form-control" formControlName="experience">
+    </div>
+
+    <div class="mb-3">
+      <label for="timings">Timings</label>
+      <input type="text" class="form-control" formControlName="timings">
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Register</button>
+  </form>
+</div>

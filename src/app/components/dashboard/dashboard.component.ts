@@ -13,9 +13,9 @@ export class DashboardComponent {
   role = localStorage.getItem('role');
 
   adminItems = [
-    { label: 'Doctor Dashboard', link: '/doctors' },
     { label: 'Patient Dashboard', link: '/patients' },
-    { label: 'Medicine Dashboard', link: '/medicines' }
+    { label: 'Medicine Dashboard', link: '/medicines' },
+     { label: 'Doctor Dashboard', link: '/admin/doctor-dashboard' }
   ];
 
   doctorItems = [
@@ -34,4 +34,7 @@ export class DashboardComponent {
     { label: 'View Appointments', link: '/appointments' },
     { label: 'My Prescriptions', link: '/prescriptions' }
   ];
+
+ 
+
 }

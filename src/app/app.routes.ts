@@ -22,6 +22,9 @@ import { ViewAppointmentsComponent } from './components/doctor/view-appointments
 import { CreatePrescriptionComponent } from './doctor/prescriptions/create-prescription/create-prescription.component';
 import { ViewPrescriptionsComponent } from './doctor/prescriptions/view-prescriptions/view-prescriptions.component';
 import { UpdatePrescriptionComponent } from './doctor/prescriptions/update-prescription/update-prescription.component';
+import { DoctorDashboardComponent } from './admin/doctor-dashboard/doctor-dashboard.component';
+import { RegisterDoctorComponent } from './admin/register-doctor/register-doctor.component';
+import { ViewDoctorsComponent } from './admin/view-doctors/view-doctors.component';
 export const routes: Routes = [
 
   { path: '', component: HomeComponent },
@@ -44,22 +47,14 @@ export const routes: Routes = [
   { path: 'update-patient/:id',component: UpdatePatientComponent },
   { path: 'update-appointment/:id', component:UpdateAppointmentComponent},
   { path: 'doctor/view-appointments', component: ViewAppointmentsComponent },
-  {
-  path: 'doctor/prescriptions',
-  component: PrescriptionComponent
-},
-{
-  path: 'doctor/prescriptions/create',
-  component: CreatePrescriptionComponent
-},
-{
-  path: 'doctor/prescriptions/view',
-  component: ViewPrescriptionsComponent
-},
-{
-  path: 'doctor/prescriptions/update/:prescriptionId',
-  component: UpdatePrescriptionComponent
-}
+  { path: 'doctor/prescriptions',component: PrescriptionComponent},
+{path: 'doctor/prescriptions/create',component: CreatePrescriptionComponent},
+{ path: 'doctor/prescriptions/view',component: ViewPrescriptionsComponent},
+{path: 'doctor/prescriptions/update/:prescriptionId',component: UpdatePrescriptionComponent},
+{ path: 'admin/doctor-dashboard',component: DoctorDashboardComponent},
+{path: 'admin/register-doctor',component: RegisterDoctorComponent},
+{ path: 'admin/view-doctors',component: ViewDoctorsComponent}
+
 
 
 
