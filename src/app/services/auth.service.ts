@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,13 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private BASE_URL = 'http://localhost:8080/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
+   logout(): void {
+    localStorage.removeItem('token');    
+    localStorage.removeItem('role');      
+    this.router.navigate(['/signin']);    
+  }
   login(data: any): Observable<any> {
     return this.http.post(`${this.BASE_URL}/login`, data);
   }

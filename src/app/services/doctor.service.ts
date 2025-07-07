@@ -37,4 +37,5 @@ export class DoctorService {
   registerDoctor(doctor: Doctor): Observable<any> {
     return this.http.post(`${this.baseUrl}`, doctor);
   }
+  
 }

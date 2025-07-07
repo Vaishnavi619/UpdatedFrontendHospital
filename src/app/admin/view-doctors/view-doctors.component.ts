@@ -8,7 +8,7 @@ import { Router, RouterModule } from '@angular/router';
   selector: 'app-view-doctors',
   templateUrl: './view-doctors.component.html',
   standalone: true,
-  imports: [CommonModule,RouterModule]
+  imports: [CommonModule, RouterModule]
 })
 export class ViewDoctorsComponent implements OnInit {
   doctors: Doctor[] = [];
@@ -33,10 +33,20 @@ export class ViewDoctorsComponent implements OnInit {
     if (confirm('Are you sure you want to delete this doctor?')) {
       this.doctorService.deleteDoctor(doctorId).subscribe({
         next: () => {
-          alert('Doctor deleted successfully!');
+          alert('✅ Doctor deleted successfully!');
           this.loadDoctors(); // Refresh the list
         },
-        error: () => alert('Failed to delete doctor.')
+        error: (error) => {
+  if (error.status === 400 && error.error?.data?.includes('associated with one or more appointments')) {
+    alert('❌ Cannot delete doctor: Doctor is associated with one or more appointments.');
+  } else if (error.status === 403) {
+    alert('🚫  Doctor is associated with one or more appointments.');
+  } else {
+    alert('❌ Failed to delete doctor. Please try again.');
+  }
+  console.error('Delete error:', error);
+}
+
       });
     }
   }

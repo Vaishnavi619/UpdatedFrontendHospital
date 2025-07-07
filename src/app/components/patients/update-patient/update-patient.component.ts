@@ -1,65 +1,91 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PatientService } from '../../../services/patient.service';
-import { Patient } from '../../../models/patient';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-update-patient',
   templateUrl: './update-patient.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule]
-
+  imports: [RouterModule, ReactiveFormsModule]
 })
 export class UpdatePatientComponent implements OnInit {
   patientForm!: FormGroup;
   patientId!: number;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private fb: FormBuilder,
-    private patientService: PatientService
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.patientId = this.route.snapshot.params['id'];
+  this.patientId = +this.route.snapshot.paramMap.get('id')!;
 
-    this.patientService.getPatientById(this.patientId).subscribe({
-      next: (data) => {
-        this.patientForm = this.fb.group({
-          fullName: [data.fullName],
-          age: [data.age],
-          gender: [data.gender],
-          phone: [data.phone],
-          address: [data.address],
-        });
-      }
-    });
+  // 👇 Check the user's role from the token
+  const token = localStorage.getItem('token');
+  if (token) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    console.log('User role from token:', payload.role || payload.roles);
   }
 
-  updatePatient() {
-  if (this.patientForm.valid && this.patientId) {
-    const updatedData = this.patientForm.value;
-    console.log('Updating Patient ID:', this.patientId);
-    console.log('Updated Data:', updatedData); // ✅ Log for debug
+  this.patientForm = this.fb.group({
+    fullName: ['', Validators.required],
+    age: ['', Validators.required],
+    gender: ['', Validators.required],
+    phone: ['', Validators.required],
+    address: ['', Validators.required]
+  });
 
-    this.patientService.updatePatient(this.patientId, updatedData).subscribe({
-      next: (response) => {
-        alert('Patient updated successfully');
-        this.router.navigate(['/view-patients']);
-      },
-      error: (error) => {
-        console.error('Failed to update patient', error);
-        alert('Update failed');
-      }
-    });
-  }
+  this.loadPatientData();
 }
 
+  loadPatientData(): void {
+  this.http.get<any>(`http://localhost:8080/api/patients/${this.patientId}`).subscribe({
+    next: (res) => {
+      const patient = res.data; // ✅ FIXED HERE
+
+      this.patientForm.patchValue({
+        fullName: patient.fullName,
+        age: patient.age,
+        gender: patient.gender,
+        phone: patient.phone,
+        address: patient.address
+      });
+    },
+    error: (err) => {
+      alert('❌ Failed to load patient data');
+      console.error(err);
+    }
+  });
 }
 
-  
 
+  onSubmit(): void {
+  if (this.patientForm.invalid) return;
+
+  const updatedPatient = this.patientForm.value;
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`  // ✅ attach token
+  };
+
+  this.http.put(
+    `http://localhost:8080/api/patients/${this.patientId}`,
+    updatedPatient,
+    { headers }
+  ).subscribe({
+    next: () => {
+      alert('✅ Patient updated successfully');
+      this.router.navigate(['/view-patients']);
+    },
+    error: (err) => {
+      console.error(err);
+      alert('❌ Failed to update patient');
+    }
+  });
+}
+}

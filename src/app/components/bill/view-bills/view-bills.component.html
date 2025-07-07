@@ -20,9 +20,9 @@
       <tbody class="text-center">
         <tr *ngFor="let bill of bills">
           <td><span class="badge bg-secondary">{{ bill.billId }}</span></td>
-          <td>{{ bill.patient?.fullName }}</td>
-          <td><span class="badge bg-info text-dark">{{ bill.prescription?.prescriptionId }}</span></td>
-          <td>{{ bill.prescription?.diagnosis }}</td>
+          <td>{{ bill.patient.fullName }}</td>
+          <td><span class="badge bg-info text-dark"><td>{{ bill.prescription.prescriptionId }}</td></span></td>
+          <td>{{ bill.prescription.diagnosis }}</td>
           <td>₹{{ bill.consultationFee }}</td>
           <td>₹{{ bill.medicineCharges }}</td>
           <td><strong class="text-success">₹{{ bill.totalAmount }}</strong></td>

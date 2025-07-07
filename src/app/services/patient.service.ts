@@ -12,13 +12,14 @@ export class PatientService {
   constructor(private http: HttpClient) {}
 
   // ✅ Method to get authorization header
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token'); // token stored after login
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}` // attach token
-    });
-  }
+ private getAuthHeaders(): HttpHeaders {
+  const token = localStorage.getItem('token');
+  return new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`  // ✅ required
+  });
+}
+
 
   // ✅ Register new patient
   registerPatient(patient: Patient): Observable<any> {
@@ -32,12 +33,16 @@ export class PatientService {
     return this.http.get(this.baseUrl, { headers });
   }
 
-  deletePatient(patientId: number): Observable<any> {
-  return this.http.delete(`${this.baseUrl}/${patientId}`);
+ getPatientById(id: number): Observable<Patient> {
+  const headers = this.getAuthHeaders();
+  return this.http.get<Patient>(`${this.baseUrl}/${id}`, { headers });
 }
-getPatientById(id: number): Observable<Patient> {
-  return this.http.get<Patient>(`${this.baseUrl}/${id}`);
+
+deletePatient(patientId: number): Observable<any> {
+  const headers = this.getAuthHeaders();
+  return this.http.delete(`${this.baseUrl}/${patientId}`, { headers });
 }
+
 
 
 updatePatient(id: number, patientData: Patient): Observable<any> {

@@ -3,5 +3,5 @@ export interface Medicine {
   name: string;
   description: string;
   price: number;
-  quantityLeft: number; // ✅ Add this line
+  quantityLeft: number;
 }
