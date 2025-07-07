@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4 text-primary">Welcome, Admin 👑</h2>
+
+  <div class="row">
+    <!-- Sidebar Navigation -->
+    <div class="col-md-3">
+      <div class="list-group shadow">
+        <a routerLink="/admin/doctor-list" class="list-group-item list-group-item-action">
+          👨‍⚕️ Manage Doctors
+        </a>
+        <a routerLink="/patients" class="list-group-item list-group-item-action">
+          🧑‍🤝‍🧑 View Patients
+        </a>
+        <a routerLink="/medicines" class="list-group-item list-group-item-action">
+          💊 Manage Medicines
+        </a>
+        <a routerLink="/appointments" class="list-group-item list-group-item-action">
+          📅 View Appointments
+        </a>
+        <a routerLink="/prescriptions" class="list-group-item list-group-item-action">
+          📄 Manage Prescriptions
+        </a>
+        <a routerLink="/prescriptionItems" class="list-group-item list-group-item-action">
+          🧾 Prescription Items
+        </a>
+        <a routerLink="/bills" class="list-group-item list-group-item-action">
+          💰 Manage Bills
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9">
+      <div class="card shadow p-4">
+        <h4 class="text-center text-secondary mb-3">Hospital Management Dashboard</h4>
+        <p class="text-center text-muted">
+          Select an option from the left to manage your hospital data efficiently.
+        </p>
+
+        <!-- Optional Quick Actions -->
+        <div class="d-flex justify-content-center mt-4 gap-3">
+          <button class="btn btn-primary" [routerLink]="['/admin/doctor-list']">
+            👨‍⚕️ View Doctors
+          </button>
+          <button class="btn btn-success" [routerLink]="['/patients']">
+            🧑‍🤝‍🧑 View Patients
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

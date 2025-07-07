@@ -1,0 +1,17 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Update Bill</h2>
+
+  <form [formGroup]="billForm" (ngSubmit)="updateBill()">
+    <div class="mb-3">
+      <label class="form-label">Consultation Fee</label>
+      <input type="number" class="form-control" formControlName="consultationFee" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Medicine Charges</label>
+      <input type="number" class="form-control" formControlName="medicineCharges" />
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="billForm.invalid">Update Bill</button>
+  </form>
+</div>

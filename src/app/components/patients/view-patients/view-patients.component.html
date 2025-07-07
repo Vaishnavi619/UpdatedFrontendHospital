@@ -1,0 +1,29 @@
+<table *ngIf="patients.length > 0" class="table table-bordered table-striped mt-3">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Full Name</th>
+      <th>Age</th>
+      <th>Gender</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Registered Date</th>
+      <th>Actions</th> <!-- New column -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of patients">
+      <td>{{ p.patientId }}</td>
+      <td>{{ p.fullName }}</td>
+      <td>{{ p.age }}</td>
+      <td>{{ p.gender }}</td>
+      <td>{{ p.phone }}</td>
+      <td>{{ p.address }}</td>
+      <td>{{ p.registeredDate }}</td>
+      <td>
+        <button class="btn btn-warning btn-sm me-2" (click)="onEdit(p.patientId)">Update</button>
+        <button class="btn btn-danger btn-sm" (click)="onDelete(p.patientId)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

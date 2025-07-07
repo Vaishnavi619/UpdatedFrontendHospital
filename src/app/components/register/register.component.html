@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-4 text-primary">User Registration</h2>
+
+        <form (ngSubmit)="onRegister()">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              [(ngModel)]="username"
+              name="username"
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select
+              class="form-select"
+              id="role"
+              [(ngModel)]="role"
+              name="role"
+              required
+            >
+              <option value="" disabled selected>Select Role</option>
+              <option value="RECEPTIONIST">Receptionist</option>
+              <option value="DOCTOR">Doctor</option>
+              <option value="ADMIN">Admin</option>
+              <option value="PATIENT">Patient</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

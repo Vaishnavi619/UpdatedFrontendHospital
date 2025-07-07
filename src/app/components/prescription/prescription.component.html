@@ -1,0 +1,32 @@
+<div class="container py-5">
+  <h2 class="text-center text-success mb-4">Prescription Section</h2>
+
+  <div class="row justify-content-center">
+   <!-- Create Prescription -->
+<div class="col-md-4 mb-3">
+  <div class="card shadow border-success h-100 text-center">
+    <div class="card-body">
+      <i class="bi bi-plus-square fs-1 text-success mb-3"></i>
+      <h5 class="card-title">Create Prescription</h5>
+      <p class="card-text">Add a new prescription for a patient.</p>
+      <button class="btn btn-outline-success w-100" (click)="goToCreatePrescription()">
+        Create
+      </button>
+    </div>
+  </div>
+</div>
+
+
+    <!-- View Prescriptions -->
+    <div class="col-md-4 mb-3">
+      <div class="card shadow border-primary h-100 text-center">
+        <div class="card-body">
+          <i class="bi bi-eye fs-1 text-primary mb-3"></i>
+          <h5 class="card-title">View Prescriptions</h5>
+          <p class="card-text">See all created prescriptions.</p>
+          <button class="btn btn-outline-primary w-100" (click)="goToViewPrescriptions()">View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

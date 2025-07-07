@@ -1,0 +1,12 @@
+table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead th {
+  vertical-align: middle;
+}
+
+td {
+  vertical-align: middle;
+}

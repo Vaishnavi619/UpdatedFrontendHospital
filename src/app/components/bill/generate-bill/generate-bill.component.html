@@ -1,0 +1,21 @@
+<div class="container mt-4">
+  <h2>Generate Bill</h2>
+  <form [formGroup]="billForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="patientId" class="form-label">Patient ID</label>
+      <input type="number" id="patientId" class="form-control" formControlName="patientId" />
+    </div>
+
+    <div class="mb-3">
+      <label for="prescriptionId" class="form-label">Prescription ID</label>
+      <input type="number" id="prescriptionId" class="form-control" formControlName="prescriptionId" />
+    </div>
+
+    <div class="mb-3">
+      <label for="consultationFee" class="form-label">Consultation Fee</label>
+      <input type="number" id="consultationFee" class="form-control" formControlName="consultationFee" />
+    </div>
+
+    <button class="btn btn-primary" [disabled]="billForm.invalid">Generate Bill</button>
+  </form>
+</div>

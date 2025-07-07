@@ -1,0 +1,37 @@
+<div class="container py-4">
+  <h2 class="text-center text-success mb-4">List of Medicines</h2>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-success">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity Left</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let medicine of medicines; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ medicine.name }}</td>
+        <td>{{ medicine.description }}</td>
+        <td>{{ medicine.price }}</td>
+        <td>{{ medicine.quantityLeft }}</td>
+        <td>
+          <a
+            [routerLink]="['/admin/update-medicine', medicine.medicineId]"
+            class="btn btn-sm btn-outline-primary me-2"
+          >Update</a>
+          <button
+            (click)="deleteMedicine(medicine.medicineId)"
+            class="btn btn-sm btn-outline-danger"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
