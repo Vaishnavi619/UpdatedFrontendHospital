@@ -11,14 +11,16 @@ export class PatientService {
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Method to get authorization header
- private getAuthHeaders(): HttpHeaders {
-  const token = localStorage.getItem('token');
-  return new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`  // ✅ required
-  });
-}
+ 
+
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); // token stored after login
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // attach token
+    });
+  }
 
 
   // ✅ Register new patient

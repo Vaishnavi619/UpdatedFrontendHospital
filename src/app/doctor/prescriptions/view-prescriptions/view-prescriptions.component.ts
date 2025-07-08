@@ -33,7 +33,7 @@ export class ViewPrescriptionsComponent implements OnInit {
       });
   }
 
-  // ✅ Delete prescription with better error handling
+  // ✅ Delete prescription with full error handling
   deletePrescription(prescriptionId: number): void {
     if (confirm('Are you sure you want to delete this prescription?')) {
       this.http.delete(`http://localhost:8080/api/prescriptions/${prescriptionId}`)
@@ -44,9 +44,8 @@ export class ViewPrescriptionsComponent implements OnInit {
           },
           error: (error: HttpErrorResponse) => {
             console.error('❌ Delete error:', error);
-
             if (error.status === 403) {
-              alert('❌ You cannot delete this prescription,bill is generated for this prescription');
+              alert('❌ You cannot delete this prescription, bill is generated for this prescription.');
             } else if (error.status === 404) {
               alert('❌ Prescription not found.');
             } else {

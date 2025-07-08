@@ -10,8 +10,9 @@ export class PrescriptionComponent {
   constructor(private router: Router) {}
 
   goToCreatePrescription(): void {
+    // Use hardcoded appointmentId for now
     this.router.navigate(['/doctor/prescriptions/create'], {
-      queryParams: { appointmentId: 10}
+      queryParams: { appointmentId: 3 }
     });
   }
 

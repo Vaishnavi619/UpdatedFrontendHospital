@@ -35,7 +35,7 @@ export class ViewBillsComponent implements OnInit {
   }
 
   onEdit(billId: number): void {
-    this.router.navigate(['/update-bill', billId]);
+    this.router.navigate(['/admin/update-bill', billId]);
   }
 
   onDelete(billId: number): void {

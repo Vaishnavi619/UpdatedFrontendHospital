@@ -5,7 +5,6 @@ import { MedicineComponent } from './components/medicine/medicine.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
 import { PrescriptionItemComponent } from './components/prescription-item/prescription-item.component';
-
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -30,11 +29,14 @@ import { MedicineDashboardComponent } from './admin/medicine-dashboard/medicine-
 import { AddMedicineComponent } from './admin/add-medicine/add-medicine.component';
 import { ViewMedicinesComponent } from './admin/view-medicines/view-medicines.component';
 import { UpdateMedicineComponent } from './admin/update-medicine/update-medicine.component';
-
 import { GenerateBillComponent } from './components/bill/generate-bill/generate-bill.component';
 import { ManageBillsComponent } from './components/bill/manage-bills/manage-bills.component';
-import { ViewBillsComponent } from './components/bill/view-bills/view-bills.component';
 import { UpdateBillComponent } from './components/bill/update-bill/update-bill.component';
+import { ViewBillsComponent } from './components/bill/view-bills/view-bills.component';
+
+
+
+
 export const routes: Routes = [
 
   { path: '', component: HomeComponent },
@@ -68,14 +70,10 @@ export const routes: Routes = [
 {path: 'admin/add-medicine',component: AddMedicineComponent,title: 'Add Medicine'},
 {path: 'admin/view-medicines',component: ViewMedicinesComponent,title: 'View Medicines'},
 {path: 'admin/update-medicine/:medicineId',component: UpdateMedicineComponent,title: 'Update Medicine'},
- { path: 'generate-bill', component: GenerateBillComponent },
- {path: 'manage-bills',component: ManageBillsComponent},
- { path: 'view-bills', component: ViewBillsComponent },
- { path: 'update-bill/:billId', component: UpdateBillComponent }
-
-
-
-
+{path:'generate-bill',component:GenerateBillComponent},
+{path:'manage-bill',component:ManageBillsComponent},
+{path:'admin/update-bill/:billId',component:UpdateBillComponent},
+{path:'view-bills',component:ViewBillsComponent}
 
 
 

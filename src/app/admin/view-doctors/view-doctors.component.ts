@@ -25,7 +25,7 @@ export class ViewDoctorsComponent implements OnInit {
   loadDoctors(): void {
     this.doctorService.getAllDoctors().subscribe({
       next: (data) => this.doctors = data,
-      error: () => alert('Failed to load doctors')
+      error: () => alert('❌ Failed to load doctors')
     });
   }
 
@@ -37,16 +37,15 @@ export class ViewDoctorsComponent implements OnInit {
           this.loadDoctors(); // Refresh the list
         },
         error: (error) => {
-  if (error.status === 400 && error.error?.data?.includes('associated with one or more appointments')) {
-    alert('❌ Cannot delete doctor: Doctor is associated with one or more appointments.');
-  } else if (error.status === 403) {
-    alert('🚫  Doctor is associated with one or more appointments.');
-  } else {
-    alert('❌ Failed to delete doctor. Please try again.');
-  }
-  console.error('Delete error:', error);
-}
-
+          if (error.status === 400 && error.error?.data?.includes('associated with one or more appointments')) {
+            alert('❌ Cannot delete doctor: Doctor is associated with one or more appointments.');
+          } else if (error.status === 403) {
+            alert('🚫 Doctor is associated with one or more appointments.');
+          } else {
+            alert('❌ Failed to delete doctor. Please try again.');
+          }
+          console.error('Delete error:', error);
+        }
       });
     }
   }

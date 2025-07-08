@@ -27,7 +27,7 @@ export class DashboardComponent {
   receptionistItems = [
     { label: 'Manage Appointments', link: '/appointments' },
     { label: 'Manage Patients', link: '/patients' },
-    { label: 'Manage Bills', link: '/manage-bills' }
+    { label: 'Manage Bills', link: '/manage-bill' }
   ];
 
   patientItems = [

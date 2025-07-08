@@ -2,7 +2,7 @@
   <h2 class="text-center text-success mb-4">List of Medicines</h2>
 
   <table class="table table-bordered table-hover">
-    <thead class="table-success">
+    <thead class="table-success text-center">
       <tr>
         <th>Medicine Id</th>
         <th>Name</th>
@@ -12,7 +12,7 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="text-center">
       <tr *ngFor="let medicine of medicines; let i = index">
         <td>{{ i + 1 }}</td>
         <td>{{ medicine.name }}</td>

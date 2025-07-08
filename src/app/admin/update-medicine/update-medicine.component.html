@@ -1,28 +1,27 @@
 <div class="container py-4">
   <h2 class="text-center text-primary mb-4">Update Medicine</h2>
 
-  <form [formGroup]="medicineForm" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label class="form-label">Medicine Name</label>
-    <input type="text" class="form-control" formControlName="name" />
-  </div>
+  <form [formGroup]="medicineForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow">
+    <div class="mb-3">
+      <label for="name" class="form-label">Medicine Name</label>
+      <input type="text" id="name" class="form-control" formControlName="name" />
+    </div>
 
-  <div class="mb-3">
-    <label class="form-label">Description</label>
-    <input type="text" class="form-control" formControlName="description" />
-  </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" class="form-control" formControlName="description"></textarea>
+    </div>
 
-  <div class="mb-3">
-    <label class="form-label">Price</label>
-    <input type="number" class="form-control" formControlName="price" />
-  </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="number" id="price" class="form-control" formControlName="price" />
+    </div>
 
-  <div class="mb-3">
-    <label class="form-label">Quantity Left</label>
-    <input type="number" class="form-control" formControlName="quantityLeft" />
-  </div>
+    <div class="mb-3">
+      <label for="quantityLeft" class="form-label">Quantity Left</label>
+      <input type="number" id="quantityLeft" class="form-control" formControlName="quantityLeft" />
+    </div>
 
-  <button class="btn btn-success w-100" type="submit">Update</button>
-</form>
-
+    <button type="submit" class="btn btn-success w-100" [disabled]="!medicineForm.valid">Update</button>
+  </form>
 </div>
