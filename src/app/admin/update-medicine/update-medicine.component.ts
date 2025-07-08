@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -25,49 +25,59 @@ export class UpdateMedicineComponent implements OnInit {
     // ✅ Get medicine ID from route
     this.medicineId = +this.route.snapshot.paramMap.get('medicineId')!;
 
-    // ✅ Initialize form
+    // ✅ Initialize form with backend field names
     this.medicineForm = this.fb.group({
-      medicineName: ['', Validators.required],
+      name: ['', Validators.required],            // 🔁 matches backend field
       description: ['', Validators.required],
-      price: [0, Validators.required],
-      quantity: [0, Validators.required]
+      price: ['', Validators.required],
+      quantityLeft: ['', Validators.required]      // 🔁 matches backend field
     });
 
-    // ✅ Load and pre-fill data
+    // ✅ Load and pre-fill form
     this.loadMedicineData();
   }
 
-  loadMedicineData(): void {
-   this.http.get<any>(`http://localhost:8080/api/medicines/${this.medicineId}`).subscribe({
-  next: (res) => {
-    const medicine = res.data; // ✅ confirmed correct
-    console.log("Form after patchValue:", this.medicineForm.value);
-// Add this line to debug
-
-    this.medicineForm.patchValue({
-      medicineName: medicine.medicineName,
-      description: medicine.description,
-      price: medicine.price,
-      quantity: medicine.quantity
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
-  },
-  error: () => {
-    alert('Failed to load medicine details');
   }
-});
 
+  loadMedicineData(): void {
+    const headers = this.getAuthHeaders();
+
+    this.http.get<any>(`http://localhost:8080/api/medicines/${this.medicineId}`, { headers }).subscribe({
+      next: (res) => {
+        const medicine = res.data;
+        this.medicineForm.patchValue({
+          name: medicine.name,                     // ✅ updated
+          description: medicine.description,
+          price: medicine.price,
+          quantityLeft: medicine.quantityLeft      // ✅ updated
+        });
+      },
+      error: (err) => {
+        console.error('❌ Failed to load medicine details', err);
+        alert('❌ Failed to load medicine details');
+      }
+    });
   }
 
   onSubmit(): void {
     if (this.medicineForm.invalid) return;
 
     const updatedMedicine = this.medicineForm.value;
-    this.http.put(`http://localhost:8080/api/medicines/${this.medicineId}`, updatedMedicine).subscribe({
+    const headers = this.getAuthHeaders();
+
+    this.http.put(`http://localhost:8080/api/medicines/${this.medicineId}`, updatedMedicine, { headers }).subscribe({
       next: () => {
         alert('✅ Medicine updated successfully');
         this.router.navigate(['/admin/view-medicines']);
       },
-      error: () => {
+      error: (err) => {
+        console.error('❌ Failed to update medicine', err);
         alert('❌ Failed to update medicine');
       }
     });

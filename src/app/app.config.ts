@@ -1,35 +1,35 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
-import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { routes } from './app.routes';
 import { AuthInterceptor } from './auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // ✅ Provide routes
+    // ✅ Route provider
     provideRouter(routes),
 
-    // ✅ Provide HTTP with DI interceptors
+    // ✅ HTTP client with DI interceptors
     provideHttpClient(withInterceptorsFromDi()),
 
-    // ✅ Register custom HTTP interceptor
+    // ✅ Register custom AuthInterceptor
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
     },
 
-    // ✅ Provide modules used in templates (like formGroup, routerLink, ngIf, ngFor etc.)
-   importProvidersFrom(
-  RouterModule,
-  FormsModule,
-  ReactiveFormsModule,
-  CommonModule
-)
-
+    // ✅ Import Angular modules for standalone components
+    importProvidersFrom(
+      RouterModule,
+      FormsModule,
+      ReactiveFormsModule,
+      CommonModule
+    )
   ]
 };
