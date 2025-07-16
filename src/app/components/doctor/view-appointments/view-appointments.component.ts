@@ -14,8 +14,16 @@ export class ViewAppointmentsComponent implements OnInit {
   constructor(private appointmentService: AppointmentService) {}
 
   ngOnInit(): void {
-    this.getAppointments();
-  }
+  this.appointmentService.getAppointmentsForLoggedInDoctor().subscribe({
+    next: (appointments) => {
+      this.appointments = appointments;
+    },
+    error: (err) => {
+      console.error('Error fetching doctor appointments', err);
+    }
+  });
+}
+
 
   getAppointments(): void {
     this.appointmentService.getAllAppointments().subscribe({

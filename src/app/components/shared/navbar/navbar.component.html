@@ -1,11 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">🏥 Hospital System</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <a class="navbar-brand" [routerLink]="['']">Hospital System</a>
 
-    <div class="d-flex">
-      <button class="btn btn-outline-light" (click)="logout()">
-        🔒 Logout
-      </button>
-    </div>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/about']">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/contact']">Contact</a>
+      </li>
+    </ul>
+
+    <button class="btn btn-outline-light" (click)="logout()">Logout</button>
   </div>
 </nav>

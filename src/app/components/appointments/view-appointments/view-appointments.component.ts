@@ -45,17 +45,26 @@ export class ViewAppointmentComponent implements OnInit {
     this.router.navigate(['/update-appointment', id]);
   }
 
-  // ✅ Delete the appointment
-  onDelete(id: number): void {
-    if (confirm('Are you sure you want to delete this appointment?')) {
-      this.appointmentService.deleteAppointment(id).subscribe({
-        next: () => {
-          alert('Deleted successfully');
-          this.loadAppointments(); // reload the list
-        },
-        error: () => alert('Delete failed')
-      });
-    }
+ onDelete(id: number): void {
+  if (confirm('Are you sure you want to delete this appointment?')) {
+    this.appointmentService.deleteAppointment(id).subscribe({
+      next: () => {
+        alert('✅ Appointment deleted successfully!');
+        this.loadAppointments(); // Refresh list
+      },
+      error: (error) => {
+        if (error.status === 400 && error.error?.message?.includes('associated')) {
+          alert('⚠️ Cannot delete: Appointment is associated with other records.');
+        } else if (error.status === 403) {
+          alert('🚫 Appointment is associated with other records.');
+        } else {
+          alert('❌ Failed to delete the appointment. Please try again.');
+        }
+        console.error('Delete error:', error);
+      }
+    });
   }
+}
+
 }
 

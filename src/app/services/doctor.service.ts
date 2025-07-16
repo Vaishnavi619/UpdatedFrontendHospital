@@ -44,4 +44,9 @@ export class DoctorService {
   registerDoctor(doctor: Doctor): Observable<any> {
     return this.http.post(`${this.baseUrl}`, doctor);
   }
+
+  getAllPatients() {
+  return this.http.get<any[]>('http://localhost:8080/api/patients');
+}
+
 }

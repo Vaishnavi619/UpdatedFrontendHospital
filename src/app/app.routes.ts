@@ -4,7 +4,7 @@ import { DoctorComponent } from './components/doctor/doctor.component';
 import { MedicineComponent } from './components/medicine/medicine.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
 import { PrescriptionComponent } from './components/prescription/prescription.component';
-import { PrescriptionItemComponent } from './components/prescription-item/prescription-item.component';
+
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -33,19 +33,21 @@ import { GenerateBillComponent } from './components/bill/generate-bill/generate-
 import { ManageBillsComponent } from './components/bill/manage-bills/manage-bills.component';
 import { UpdateBillComponent } from './components/bill/update-bill/update-bill.component';
 import { ViewBillsComponent } from './components/bill/view-bills/view-bills.component';
-
-
-
-
+import { AboutComponent } from './components/about.component';
+import { ContactComponent } from './components/contact.component';
+import { PatientViewAppointmentComponent } from './components/patient-view-appointment/patient-view-appointment.component';
+import { PatientViewPrescriptionComponent } from './components/patient-view-prescription/patient-view-prescription.component';
+import { PatientViewBillComponent } from './components/patient-view-bill/patient-view-bill.component';
 export const routes: Routes = [
 
   { path: '', component: HomeComponent },
+
   { path: 'patients', component: PatientComponent },
   {path:'doctors',component:DoctorComponent},
   { path: 'medicines', component: MedicineComponent },
    { path: 'appointments', component: AppointmentComponent },
    {path:'prescriptions', component:PrescriptionComponent},
-   {path:'prescriptionItems',component:PrescriptionItemComponent},  
+   
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
      { path: 'dashboard', component: DashboardComponent },
@@ -55,7 +57,7 @@ export const routes: Routes = [
   { path: 'appointments/view', component: ViewAppointmentComponent },
    { path: 'register-patient', component: RegisterPatientComponent },
   { path: 'view-patients', component: ViewPatientsComponent },
-  { path: 'update-patient/:id',component: UpdatePatientComponent },
+  { path: 'update-patient/:patientId', component: UpdatePatientComponent },
   { path: 'update-appointment/:id', component:UpdateAppointmentComponent},
   { path: 'doctor/view-appointments', component: ViewAppointmentsComponent },
   { path: 'doctor/prescriptions',component: PrescriptionComponent},
@@ -73,8 +75,21 @@ export const routes: Routes = [
 {path:'generate-bill',component:GenerateBillComponent},
 {path:'manage-bill',component:ManageBillsComponent},
 {path:'admin/update-bill/:billId',component:UpdateBillComponent},
-{path:'view-bills',component:ViewBillsComponent}
-
+{path:'view-bills',component:ViewBillsComponent},
+{path:'about',component:AboutComponent},
+{path:'contact',component:ContactComponent},
+{
+  path: 'patient/appointments',
+  component: PatientViewAppointmentComponent
+},
+{
+  path: 'patient/prescriptions',
+  component: PatientViewPrescriptionComponent
+},
+{
+  path: 'patient/bills',
+  component: PatientViewBillComponent
+}
 
 
 

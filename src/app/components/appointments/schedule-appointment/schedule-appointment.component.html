@@ -1,75 +1,52 @@
-<div class="container mt-5">
-  <h2>Schedule Appointment</h2>
+<div class="container py-5">
+  <h2 class="text-center text-primary mb-4">Schedule Appointment</h2>
+  <form (ngSubmit)="onSubmit()">
+    <!-- Doctor Dropdown -->
+     <label for="doctorId">Select Doctor</label>
+<select class="form-select" [(ngModel)]="appointment.doctor.doctorId" name="doctorId" required>
+  <option value="" disabled selected>Select Doctor</option>
+  <option *ngFor="let doctor of doctors" [value]="doctor.doctorId">
+    {{ doctor.doctorName }}
+  </option>
+</select>
 
-  <form (ngSubmit)="onSubmit()" #appointmentForm="ngForm">
-
-    <!-- Doctor ID -->
+    <!-- 🔽 Patient Dropdown -->
     <div class="mb-3">
-      <label for="doctorId" class="form-label">Doctor ID</label>
-      <input
-        type="number"
-        id="doctorId"
-        name="doctorId"
-        class="form-control"
-        required
-        [(ngModel)]="appointment.doctor.doctorId"
-      />
+      <label for="patientId">SelectPatient</label>
+      <select class="form-select" [(ngModel)]="appointment.patient.patientId"
+ name="patientId" required>
+        <option value="" disabled selected>Select Patient</option>
+        <option *ngFor="let patient of patients" [value]="patient.patientId">
+          {{ patient.fullName }}
+        </option>
+      </select>
     </div>
 
-    <!-- Patient ID -->
+   <div class="mb-3">
+  <label for="appointmentDate">Appointment Date</label>
+  <input
+    type="date"
+    class="form-control"
+    [(ngModel)]="appointment.appointmentDate"
+    name="appointmentDate"
+    [min]="todayDate"
+    required
+  />
+</div>
+
+
+    <!-- ⏰ Appointment Time -->
     <div class="mb-3">
-      <label for="patientId" class="form-label">Patient ID</label>
-      <input
-        type="number"
-        id="patientId"
-        name="patientId"
-        class="form-control"
-        required
-        [(ngModel)]="appointment.patient.patientId"
-      />
+      <label for="appointmentTime">Appointment Time</label>
+      <input type="time" class="form-control" [(ngModel)]="appointment.appointmentTime" name="appointmentTime" required>
     </div>
 
-    <!-- Appointment Date -->
+    <!-- 📝 Reason -->
     <div class="mb-3">
-      <label for="appointmentDate" class="form-label">Appointment Date</label>
-      <input
-        type="date"
-        id="appointmentDate"
-        name="appointmentDate"
-        class="form-control"
-        required
-        [(ngModel)]="appointment.appointmentDate"
-      />
+      <label for="reason">Reason</label>
+      <textarea class="form-control" rows="3" [(ngModel)]="appointment.reason" name="reason" required></textarea>
     </div>
 
-    <!-- Appointment Time -->
-    <div class="mb-3">
-      <label for="appointmentTime" class="form-label">Appointment Time</label>
-      <input
-        type="time"
-        id="appointmentTime"
-        name="appointmentTime"
-        class="form-control"
-        required
-        [(ngModel)]="appointment.appointmentTime"
-      />
-    </div>
-
-    <!-- Reason -->
-    <div class="mb-3">
-      <label for="reason" class="form-label">Reason</label>
-      <textarea
-        id="reason"
-        name="reason"
-        rows="3"
-        class="form-control"
-        required
-        [(ngModel)]="appointment.reason"
-      ></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary" [disabled]="!appointmentForm.valid">
-      Submit
-    </button>
+    <button type="submit" class="btn btn-success w-100">Submit</button>
   </form>
 </div>

@@ -1,19 +1,51 @@
 <div class="container mt-4">
   <h2>Generate Bill</h2>
   <form [formGroup]="billForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Patient Dropdown -->
     <div class="mb-3">
-      <label for="patientId" class="form-label">Patient ID</label>
-      <input type="number" id="patientId" class="form-control" formControlName="patientId" />
+      <label class="form-label">Select Patient</label>
+      <select class="form-select" formControlName="patientId" required>
+        <option value="" disabled selected>Select Patient</option>
+        <option *ngFor="let patient of patients" [value]="patient.patientId">
+          {{ patient.fullName }}
+        </option>
+      </select>
     </div>
 
+    <!-- Prescription Diagnosis Dropdown -->
     <div class="mb-3">
-      <label for="prescriptionId" class="form-label">Prescription ID</label>
-      <input type="number" id="prescriptionId" class="form-control" formControlName="prescriptionId" />
-    </div>
+  <label for="diagnosis" class="form-label">Diagnosis</label>
+  <select
+    id="diagnosis"
+    class="form-select"
+    formControlName="prescriptionId"
+  >
+    <option value="" disabled selected>Select Diagnosis</option>
+    <option *ngFor="let p of prescriptions" [value]="p.prescriptionId">
+      {{ p.diagnosis }}
+    </option>
+  </select>
+</div>
 
+
+    <!-- Consultation Fee Input -->
     <div class="mb-3">
       <label for="consultationFee" class="form-label">Consultation Fee</label>
-      <input type="number" id="consultationFee" class="form-control" formControlName="consultationFee" />
+      <input
+        type="number"
+        id="consultationFee"
+        class="form-control"
+        formControlName="consultationFee"
+        min="0"
+        required
+      />
+    </div>
+
+    <!-- Total (Optional Display) -->
+    <div *ngIf="selectedPrescription">
+      <p><strong>Medicine Price:</strong> ₹{{ selectedPrescription.medicinePrice }}</p>
+      <p><strong>Total (Est.):</strong> ₹{{ selectedPrescription.medicinePrice + billForm.value.consultationFee }}</p>
     </div>
 
     <button class="btn btn-primary" [disabled]="billForm.invalid">Generate Bill</button>

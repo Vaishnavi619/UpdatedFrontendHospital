@@ -23,7 +23,7 @@ export class ViewPatientsComponent implements OnInit {
   loadPatients(): void {
     this.patientService.getAllPatients().subscribe({
       next: (response) => {
-        this.patients = response.data;
+        this.patients = response;
       },
       error: (error) => {
         console.error("Failed to load patients", error);

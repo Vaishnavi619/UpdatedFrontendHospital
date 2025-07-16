@@ -12,16 +12,42 @@
       <input type="text" id="description" formControlName="description" class="form-control" />
     </div>
 
+    <!-- ✅ Price Field with Validation -->
     <div class="mb-3">
       <label for="price" class="form-label">Price</label>
-      <input type="number" id="price" formControlName="price" class="form-control" />
+      <input
+        type="text"
+        id="price"
+        formControlName="price"
+        class="form-control"
+        pattern="^[1-9][0-9]*$"
+        maxlength="5"
+        (keypress)="allowOnlyDigits($event)"
+      />
+      <div *ngIf="medicineForm.get('price')?.touched && medicineForm.get('price')?.invalid" class="text-danger mt-1">
+        <div *ngIf="medicineForm.get('price')?.errors?.['pattern']">Price must be a number and not start with 0.</div>
+        <div *ngIf="medicineForm.get('price')?.errors?.['required']">Price is required.</div>
+      </div>
     </div>
 
+    <!-- ✅ Quantity Left Field with Validation -->
     <div class="mb-3">
       <label for="quantityLeft" class="form-label">Quantity Left</label>
-      <input type="number" id="quantityLeft" formControlName="quantityLeft" class="form-control" />
+      <input
+        type="text"
+        id="quantityLeft"
+        formControlName="quantityLeft"
+        class="form-control"
+        pattern="^[1-9][0-9]*$"
+        maxlength="5"
+        (keypress)="allowOnlyDigits($event)"
+      />
+      <div *ngIf="medicineForm.get('quantityLeft')?.touched && medicineForm.get('quantityLeft')?.invalid" class="text-danger mt-1">
+        <div *ngIf="medicineForm.get('quantityLeft')?.errors?.['pattern']">Quantity must be a number and not start with 0.</div>
+        <div *ngIf="medicineForm.get('quantityLeft')?.errors?.['required']">Quantity is required.</div>
+      </div>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">Add Medicine</button>
+    <button type="submit" class="btn btn-primary w-100" [disabled]="!medicineForm.valid">Add Medicine</button>
   </form>
 </div>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Bill } from '../models/bill';
@@ -29,4 +29,13 @@ getBillById(billId: number): Observable<any> {
 updateBill(billId: number, updatedData: any): Observable<any> {
   return this.http.put(`${this.baseUrl}/${billId}`, updatedData);
 }
+getBillsForLoggedInPatient(): Observable<any> {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+  return this.http.get(`${this.baseUrl}/patient/view-bills`, { headers });
+}
+
+
 }

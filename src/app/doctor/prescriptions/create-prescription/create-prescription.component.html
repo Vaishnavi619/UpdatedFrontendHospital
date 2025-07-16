@@ -1,22 +1,74 @@
 <div class="container py-4">
   <h2 class="text-center text-success mb-4">Create Prescription</h2>
 
-  <form [formGroup]="prescriptionForm" (ngSubmit)="onSubmit()" class="w-50 mx-auto">
+  <form [formGroup]="prescriptionForm" (ngSubmit)="onSubmit()" class="w-50 mx-auto needs-validation">
+    
+    <!-- Diagnosis -->
     <div class="mb-3">
-      <label for="diagnosis" class="form-label">Diagnosis *</label>
-      <input type="text" class="form-control" formControlName="diagnosis" required>
+      <label class="form-label">Diagnosis *</label>
+      <input type="text" class="form-control" formControlName="diagnosis">
+      <div class="text-danger" *ngIf="prescriptionForm.get('diagnosis')?.touched && prescriptionForm.get('diagnosis')?.invalid">
+        Diagnosis is required
+      </div>
     </div>
 
+    <!-- Advice -->
     <div class="mb-3">
-      <label for="advice" class="form-label">Advice</label>
-      <textarea class="form-control" formControlName="advice" rows="3"></textarea>
+      <label class="form-label">Advice</label>
+      <textarea class="form-control" formControlName="advice" rows="2"></textarea>
     </div>
 
+    <!-- Date -->
     <div class="mb-3">
-      <label for="date" class="form-label">Date *</label>
-      <input type="date" class="form-control" formControlName="date" required>
+      <label class="form-label">Date *</label>
+      <input type="date" class="form-control" formControlName="date">
     </div>
 
-    <button type="submit" class="btn btn-success w-100" [disabled]="prescriptionForm.invalid">Submit</button>
+    <!-- Medicine Dropdown -->
+<div class="mb-3">
+  <label for="medicineId" class="form-label">Select Medicine *</label>
+  <select class="form-select" formControlName="medicineId" required>
+    <option value="" disabled selected>Select a medicine</option>
+    <option *ngFor="let med of medicines" [value]="med.medicineId">
+      {{ med.name }} - ₹{{ med.price }}
+    </option>
+  </select>
+</div>
+
+
+
+    <!-- Dosage -->
+    <div class="mb-3">
+      <label class="form-label">Dosage (e.g., 2)</label>
+      <input type="text" class="form-control" formControlName="dosage">
+      <div class="text-danger" *ngIf="prescriptionForm.get('dosage')?.touched && prescriptionForm.get('dosage')?.invalid">
+        Dosage is required
+      </div>
+    </div>
+
+    <!-- Duration -->
+    <div class="mb-3">
+      <label class="form-label">Duration (in days) *</label>
+      <input type="number" class="form-control" formControlName="durationDays" min="1">
+      <div class="text-danger" *ngIf="prescriptionForm.get('durationDays')?.touched && prescriptionForm.get('durationDays')?.invalid">
+        Duration must be at least 1 day
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn btn-success w-100" [disabled]="prescriptionForm.invalid">
+      Submit Prescription
+    </button>
   </form>
+
+  <!-- ✅ Toast for success -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" *ngIf="showToast">
+    <div class="toast align-items-center text-bg-success border-0 show">
+      <div class="d-flex">
+        <div class="toast-body">
+          ✅ Prescription created successfully!
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

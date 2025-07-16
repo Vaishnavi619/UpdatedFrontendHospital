@@ -23,6 +23,22 @@ export class PrescriptionService {
     const url = `${this.baseUrl}/${appointmentId}`;
     return this.http.post<Prescription>(url, prescriptionData, { headers });
   }
+  
+getPrescriptionsForLoggedInDoctor(): Observable<any> {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  return this.http.get<any>(`${this.baseUrl}/doctor/view-prescriptions`, { headers });
+}
+getPrescriptionsForLoggedInPatient(): Observable<any> {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+  return this.http.get(`${this.baseUrl}/patient/view-prescriptions`, { headers });
+}
+
+
 
   // ✅ Get all prescriptions
 getAllPrescriptions(): Observable<{ message: string; statuscode: number; data: Prescription[] }> {
@@ -35,4 +51,5 @@ getAllPrescriptions(): Observable<{ message: string; statuscode: number; data: P
     }
   );
 }
+
 }

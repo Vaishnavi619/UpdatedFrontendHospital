@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 import { Patient } from '../models/patient';
 
 @Injectable({
@@ -11,48 +11,43 @@ export class PatientService {
 
   constructor(private http: HttpClient) {}
 
- 
-
-
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token'); // token stored after login
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}` // attach token
-    });
-  }
-
-
-  // ✅ Register new patient
-  registerPatient(patient: Patient): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(this.baseUrl, patient, { headers });
-  }
-
   // ✅ Get all patients
-  getAllPatients(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(this.baseUrl, { headers });
+  getAllPatients(): Observable<Patient[]> {
+    return this.http.get<any>(this.baseUrl).pipe(
+      map(response => response.data)
+    );
   }
 
- getPatientById(id: number): Observable<Patient> {
-  const headers = this.getAuthHeaders();
-  return this.http.get<Patient>(`${this.baseUrl}/${id}`, { headers });
+  // ✅ Add new patient
+  addPatient(patient: Patient): Observable<any> {
+    return this.http.post<any>(this.baseUrl, patient);
+  }
+
+  // ✅ Update existing patient
+  updatePatient(patient: Patient): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${patient.patientId}`, patient);
+  }
+
+  // ✅ Delete patient by ID
+  deletePatient(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/${id}`);
+  }
+
+  // ✅ Get patient by ID
+  getPatientById(id: number): Observable<Patient> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`).pipe(
+      map(response => response.data)
+    );
+  }
+
+  // ✅ Register patient (alias for addPatient)
+  registerPatient(patient: Patient): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, patient);
+  }
+
+  getAllDoctors() {
+  return this.http.get<any[]>('http://localhost:8080/api/doctors');
 }
-
-deletePatient(patientId: number): Observable<any> {
-  const headers = this.getAuthHeaders();
-  return this.http.delete(`${this.baseUrl}/${patientId}`, { headers });
-}
-
-
-
-updatePatient(id: number, patientData: Patient): Observable<any> {
-  const headers = this.getAuthHeaders(); // ✅ add headers
-  return this.http.put(`${this.baseUrl}/${id}`, patientData, { headers });
-}
-
-
 }
 
 

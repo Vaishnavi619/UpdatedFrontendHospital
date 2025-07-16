@@ -52,4 +52,13 @@ export class AuthService {
     this.clearAuthData();              // clears token and role
     this.router.navigate(['/signin']); // navigate to sign-in page
   }
+
+  getLoggedInUsername(): string | null {
+  const token = localStorage.getItem('token');
+  if (!token) return null;
+
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  return payload.sub; // 'sub' contains the username
+}
+
 }

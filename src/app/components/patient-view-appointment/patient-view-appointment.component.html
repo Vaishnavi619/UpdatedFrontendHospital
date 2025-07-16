@@ -1,0 +1,32 @@
+<div class="container mt-4">
+  <h2 class="text-center">Your Appointments</h2>
+
+  <div *ngIf="appointments.length === 0" class="alert alert-info">
+    No appointments scheduled.
+  </div>
+
+  <div *ngIf="appointments.length > 0" class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Appointment No.</th>
+          <th>Doctor</th>
+          <th>Patient</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appt of appointments; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ appt.doctor?.doctorName }}</td>
+          <td>{{ appt.patient?.fullName }}</td>
+          <td>{{ appt.appointmentDate }}</td>
+          <td>{{ appt.appointmentTime }}</td>
+          <td>{{ appt.reason }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

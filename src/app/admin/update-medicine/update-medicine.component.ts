@@ -1,67 +1,83 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MedicineService } from '../../services/medicine.service';
 
 @Component({
   selector: 'app-update-medicine',
   templateUrl: './update-medicine.component.html',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports:[ReactiveFormsModule,CommonModule]
 })
 export class UpdateMedicineComponent implements OnInit {
   medicineForm!: FormGroup;
   medicineId!: number;
 
   constructor(
-    private route: ActivatedRoute,
     private fb: FormBuilder,
-    private medicineService: MedicineService,
+    private http: HttpClient,
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Get medicineId from route
-    this.medicineId = Number(this.route.snapshot.paramMap.get('medicineId'));
-
-    // Initialize the form
+    this.medicineId = +this.route.snapshot.paramMap.get('medicineId')!;
+    
     this.medicineForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]],
-      quantityLeft: ['', [Validators.required, Validators.min(0)]],
+       price: ['', [Validators.required, Validators.min(1)]],
+  quantityLeft: ['', [Validators.required, Validators.min(1)]]
     });
 
-    // Fetch and patch existing data
-    this.medicineService.getMedicineById(this.medicineId).subscribe({
-      next: (data) => {
+    this.loadMedicineData();
+  }
+
+  loadMedicineData() {
+    const token = localStorage.getItem('token');
+
+    this.http.get<any>(`http://localhost:8080/api/medicines/${this.medicineId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).subscribe({
+      next: (res) => {
+        const med = res.data;
         this.medicineForm.patchValue({
-          name: data.name,
-          description: data.description,
-          price: data.price,
-          quantityLeft: data.quantityLeft,
+          name: med.name,
+          description: med.description,
+          price: med.price,
+          quantityLeft: med.quantityLeft
         });
       },
-      error: (err) => {
-        console.error('❌ Error loading medicine:', err);
-        alert('❌ Failed to load medicine');
-      }
+      error: () => alert('Failed to load medicine details')
     });
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.medicineForm.invalid) return;
 
-    this.medicineService.updateMedicine(this.medicineId, this.medicineForm.value).subscribe({
+    const updatedMedicine = this.medicineForm.value;
+    const token = localStorage.getItem('token');
+
+    this.http.put(`http://localhost:8080/api/medicines/${this.medicineId}`, updatedMedicine, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).subscribe({
       next: () => {
         alert('✅ Medicine updated successfully!');
         this.router.navigate(['/admin/view-medicines']);
       },
-      error: (err) => {
-        console.error('❌ Error updating medicine:', err);
-        alert('❌ Failed to update medicine');
-      }
+      error: () => alert('❌ Failed to update medicine')
     });
   }
+
+ allowOnlyDigits(event: KeyboardEvent): void {
+  const charCode = event.key.charCodeAt(0);
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
+
 }

@@ -21,7 +21,6 @@ export class DashboardComponent {
   doctorItems = [
     { label: 'Appointments', link: '/appointments' },
     { label: 'Prescriptions', link: '/prescriptions' },
-    { label: 'Prescription Items', link: '/prescription-items' }
   ];
 
   receptionistItems = [
@@ -30,11 +29,11 @@ export class DashboardComponent {
     { label: 'Manage Bills', link: '/manage-bill' }
   ];
 
-  patientItems = [
-    { label: 'View Appointments', link: '/appointments' },
-    { label: 'My Prescriptions', link: '/prescriptions' }
-  ];
+ patientItems=[
+ { label:'Appointments',link:'/patient/appointments'},
+ {label:'Prescriptions',link:'/patient/prescriptions'},
+ {label:'Bills',link:'/patient/bills'}
 
- 
+ ]
 
 }

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BillService } from '../../../services/bill.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-update-bill',
   templateUrl: './update-bill.component.html',
   styleUrls: ['./update-bill.component.css'],
-  imports:[RouterModule,ReactiveFormsModule]
+  imports:[FormsModule,ReactiveFormsModule,CommonModule]
 })
 export class UpdateBillComponent implements OnInit {
   billForm!: FormGroup;
@@ -21,39 +22,44 @@ export class UpdateBillComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.billId = +this.route.snapshot.paramMap.get('billId')!;
-    this.loadBill();
-  }
+    // ✅ Build the form with validation
+    this.billForm = this.fb.group({
+      consultationFee: ['', [Validators.required, Validators.min(1)]]
+    });
 
-  loadBill(): void {
+    // ✅ Get billId from URL and fetch existing bill
+    this.billId = this.route.snapshot.params['billId'];
     this.billService.getBillById(this.billId).subscribe({
-      next: (response) => {
-        const bill = response.data;
-        this.billForm = this.fb.group({
-          consultationFee: [bill.consultationFee, [Validators.required, Validators.min(0)]],
-          medicineCharges: [bill.medicineCharges, [Validators.required, Validators.min(0)]],
+      next: (res) => {
+        const bill = res.data;
+        this.billForm.patchValue({
+          consultationFee: bill.consultationFee
         });
       },
       error: (err) => {
-        alert('Failed to load bill');
-        console.error(err);
+        console.error('Error fetching bill:', err);
+        alert('Failed to load bill data.');
       }
     });
   }
 
   updateBill(): void {
-    if (this.billForm.invalid) return;
+    if (this.billForm.invalid) {
+      return;
+    }
 
-    const updatedData = this.billForm.value;
+    const updatedBill = {
+      consultationFee: this.billForm.value.consultationFee
+    };
 
-    this.billService.updateBill(this.billId, updatedData).subscribe({
+    this.billService.updateBill(this.billId, updatedBill).subscribe({
       next: () => {
-        alert('Bill updated successfully');
+        alert('Bill updated successfully!');
         this.router.navigate(['/view-bills']);
       },
       error: (err) => {
-        alert('Failed to update bill');
-        console.error(err);
+        console.error('Update error:', err);
+        alert('Failed to update bill.');
       }
     });
   }

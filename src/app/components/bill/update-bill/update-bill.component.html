@@ -3,14 +3,19 @@
 
   <form [formGroup]="billForm" (ngSubmit)="updateBill()">
     <div class="mb-3">
-      <label class="form-label">Consultation Fee</label>
-      <input type="number" class="form-control" formControlName="consultationFee" />
-    </div>
+  <label class="form-label">Consultation Fee</label>
+ <input type="number" class="form-control" formControlName="consultationFee" />
 
-    <div class="mb-3">
-      <label class="form-label">Medicine Charges</label>
-      <input type="number" class="form-control" formControlName="medicineCharges" />
-    </div>
+
+  <div class="invalid-feedback" *ngIf="billForm.get('consultationFee')?.hasError('required') && billForm.get('consultationFee')?.touched">
+    Consultation fee is required.
+  </div>
+
+  <div class="invalid-feedback" *ngIf="billForm.get('consultationFee')?.hasError('min') && billForm.get('consultationFee')?.touched">
+    Consultation fee must be greater than 0.
+  </div>
+</div>
+
 
     <button type="submit" class="btn btn-success" [disabled]="billForm.invalid">Update Bill</button>
   </form>

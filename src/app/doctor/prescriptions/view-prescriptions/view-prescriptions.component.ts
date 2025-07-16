@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PrescriptionService } from '../../../services/prescription.service';
 
 @Component({
   selector: 'app-view-prescriptions',
@@ -13,10 +14,20 @@ import { CommonModule } from '@angular/common';
 export class ViewPrescriptionsComponent implements OnInit {
   prescriptions: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private prescriptionService:PrescriptionService) {}
 
-  ngOnInit(): void {
-    this.fetchPrescriptions();
+   ngOnInit(): void {
+    this.prescriptionService.getPrescriptionsForLoggedInPatient().subscribe({
+  next: (response) => {
+    console.log("✅ Loaded patient prescriptions:", response);
+    this.prescriptions = response.data;
+  },
+  error: (err) => {
+    console.error("❌ Error loading prescriptions:", err);
+  }
+});
+
+
   }
 
   // ✅ Fetch all prescriptions
@@ -24,6 +35,7 @@ export class ViewPrescriptionsComponent implements OnInit {
     this.http.get<any>('http://localhost:8080/api/prescriptions')
       .subscribe({
         next: (response) => {
+          console.log('✅ Fetched prescriptions:', response);
           this.prescriptions = response.data;
         },
         error: (err) => {

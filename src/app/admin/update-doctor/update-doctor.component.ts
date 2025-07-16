@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-update-doctor',
   templateUrl: './update-doctor.component.html',
-  imports:[RouterModule,ReactiveFormsModule]
+  imports:[RouterModule,ReactiveFormsModule,CommonModule]
 })
 export class UpdateDoctorComponent implements OnInit {
   doctorForm!: FormGroup;
@@ -24,7 +25,7 @@ export class UpdateDoctorComponent implements OnInit {
     this.doctorForm = this.fb.group({
       doctorName: ['', Validators.required],
       specialization: ['', Validators.required],
-      experience: ['', Validators.required],
+     experience: ['', [Validators.required, Validators.min(0)]],
       timings: ['', Validators.required]
     });
 
@@ -58,4 +59,11 @@ export class UpdateDoctorComponent implements OnInit {
       error: () => alert('Failed to update doctor')
     });
   }
+ 
+allowOnlyDigits(event: KeyboardEvent): void {
+  const char = event.key;
+  if (!/^[0-9]$/.test(char)) {
+    event.preventDefault(); // Block non-digit characters
+  }
+}
 }

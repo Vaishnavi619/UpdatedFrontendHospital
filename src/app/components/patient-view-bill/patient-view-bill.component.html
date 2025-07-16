@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Your Bills</h2>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle shadow-sm rounded">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>Bill ID</th>
+          <th>Patient</th>
+          <th>Prescription ID</th>
+          <th>Diagnosis</th>
+          <th>Consultation Fee</th>
+          <th>Medicine Charges</th>
+          <th>Total Amount</th>
+          <th>Bill Date</th>
+        </tr>
+      </thead>
+
+      <tbody class="text-center">
+        <tr *ngFor="let bill of bills">
+          <td><span class="badge bg-secondary">{{ bill.billId }}</span></td>
+          <td>{{ bill.patient.fullName }}</td>
+          <td>
+            <span class="badge bg-info text-dark">
+              {{ bill.prescription.prescriptionId }}
+            </span>
+          </td>
+          <td>{{ bill.prescription.diagnosis }}</td>
+          <td>₹{{ bill.consultationFee }}</td>
+          <td>₹{{ bill.medicineCharges }}</td>
+          <td><strong class="text-success">₹{{ bill.totalAmount }}</strong></td>
+          <td>{{ bill.billDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

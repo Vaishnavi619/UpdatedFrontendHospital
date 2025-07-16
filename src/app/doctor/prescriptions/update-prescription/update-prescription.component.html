@@ -20,6 +20,27 @@
       <input type="date" id="date" formControlName="date" class="form-control" required />
     </div>
 
+    <!-- Medicine Dropdown -->
+    <div class="mb-3">
+      <label for="medicineId" class="form-label">Medicine *</label>
+      <select formControlName="medicineId" class="form-select" required>
+        <option value="">Select Medicine</option>
+        <option *ngFor="let med of medicines" [value]="med.medicineId">{{ med.name }}</option>
+      </select>
+    </div>
+
+    <!-- Dosage -->
+    <div class="mb-3">
+      <label for="dosage" class="form-label">Dosage *</label>
+      <input type="text" id="dosage" formControlName="dosage" class="form-control" required />
+    </div>
+
+    <!-- Duration Days -->
+    <div class="mb-3">
+      <label for="durationDays" class="form-label">Duration (in days) *</label>
+      <input type="number" id="durationDays" formControlName="durationDays" class="form-control" required min="1" />
+    </div>
+
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary w-100">Update</button>
   </form>

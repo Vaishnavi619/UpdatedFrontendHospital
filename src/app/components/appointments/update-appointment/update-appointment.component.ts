@@ -15,6 +15,8 @@ export class UpdateAppointmentComponent implements OnInit {
   appointmentId!: number;
   isFormReady = false;
 
+  todayDate: string = '';
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -23,6 +25,9 @@ export class UpdateAppointmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const today = new Date();
+  this.todayDate = today.toISOString().split('T')[0];
+  
     this.appointmentId = +this.route.snapshot.params['id']; // ensure it's a number
     console.log("Editing appointment with ID:", this.appointmentId);
 
@@ -53,7 +58,7 @@ export class UpdateAppointmentComponent implements OnInit {
       this.appointmentService.updateAppointment(this.appointmentId, updatedData).subscribe({
         next: () => {
           alert('Appointment updated successfully!');
-          this.router.navigate(['/view-appointments']);
+          this.router.navigate(['/appointments/view']);
         },
         error: (error) => {
           console.error('Update error:', error);
@@ -64,4 +69,12 @@ export class UpdateAppointmentComponent implements OnInit {
       alert("Please fill in all fields correctly.");
     }
   }
+
+  getTodayDate(): string {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 }

@@ -24,7 +24,7 @@ export class RegisterDoctorComponent implements OnInit {
     this.doctorForm = this.fb.group({
       doctorName: ['', Validators.required],
       specialization: ['', Validators.required],
-      experience: ['', Validators.required],
+       experience: ['', [Validators.required, Validators.min(0)]],
       timings: ['', Validators.required]
     });
   }
@@ -48,4 +48,17 @@ export class RegisterDoctorComponent implements OnInit {
       }
     });
   }
+  preventNegative(event: KeyboardEvent) {
+  if (event.key === '-' || event.key === 'e'||event.key === '0') {
+    event.preventDefault();
+  }
+}
+allowOnlyDigits(event: KeyboardEvent): void {
+  const char = event.key;
+  if (!/^[0-9]$/.test(char)) {
+    event.preventDefault(); // Block non-digit characters
+  }
+}
+
+
 }

@@ -9,14 +9,34 @@
       <label>Specialization</label>
       <input type="text" formControlName="specialization" class="form-control" />
     </div>
-    <div class="mb-3">
-      <label>Experience</label>
-      <input type="number" formControlName="experience" class="form-control" />
+     <div class="mb-3">
+  <label for="experience">Experience</label>
+  <input
+    type="text"
+    id="experience"
+    class="form-control"
+    formControlName="experience"
+    pattern="^[1-9][0-9]*$"
+    maxlength="2"
+    (keypress)="allowOnlyDigits($event)"
+  />
+  <div
+    *ngIf="doctorForm.get('experience')?.invalid && (doctorForm.get('experience')?.dirty || doctorForm.get('experience')?.touched)"
+    class="text-danger mt-1"
+  >
+    <div *ngIf="doctorForm.get('experience')?.errors?.['pattern']">
+      Experience must not start with 0 and should be a number.
     </div>
-    <div class="mb-3">
-      <label>Timings</label>
-      <input type="text" formControlName="timings" class="form-control" />
+    <div *ngIf="doctorForm.get('experience')?.errors?.['required']">
+      Experience is required.
     </div>
+  </div>
+</div>
+
+     <div class="mb-3">
+  <label for="timings">Timings</label>
+  <input type="time" class="form-control" formControlName="timings">
+</div>
     <button class="btn btn-success w-100" type="submit">Update</button>
   </form>
 </div>

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MedicineService } from '../../services/medicine.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-medicine',
   templateUrl: './add-medicine.component.html',
-  imports:[ReactiveFormsModule]
+  imports:[ReactiveFormsModule,CommonModule]
 })
 export class AddMedicineComponent implements OnInit {
   medicineForm!: FormGroup;
@@ -21,8 +22,8 @@ export class AddMedicineComponent implements OnInit {
     this.medicineForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      price: [null, [Validators.required, Validators.min(0)]],
-      quantityLeft: [null, [Validators.required, Validators.min(0)]]
+     price: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
+  quantityLeft: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]]
     });
   }
 
@@ -40,4 +41,12 @@ export class AddMedicineComponent implements OnInit {
       });
     }
   }
+ allowOnlyDigits(event: KeyboardEvent): void {
+  const charCode = event.key.charCodeAt(0);
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
+
+
 }

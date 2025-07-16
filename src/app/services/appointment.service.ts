@@ -35,11 +35,13 @@ export class AppointmentService {
   }
 
   // (Optional) Add a getAllAppointments() method if needed
-  getAllAppointments(): Observable<any> {
-    return this.http.get(this.baseUrl, {
-      headers: this.getAuthHeaders()
-    });
-  }
+  getAllAppointments() {
+  const token = localStorage.getItem('token');
+  return this.http.get<any[]>('http://localhost:8080/api/appointments', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
   scheduleAppointment(appointment: any): Observable<any> {
   return this.http.post(this.baseUrl, appointment, {
     headers: this.getAuthHeaders()
@@ -50,5 +52,22 @@ getAppointmentById(id: number): Observable<any> {
     headers: this.getAuthHeaders()
   });
 }
+getAppointmentsForLoggedInDoctor(): Observable<Appointment[]> {
+  return this.http.get<Appointment[]>(`${this.baseUrl}/doctor/appointments`);
+}
+getAppointmentsForLoggedInPatient(): Observable<{ statuscode: number, message: string, data: Appointment[] }> {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  return this.http.get<{ statuscode: number, message: string, data: Appointment[] }>(
+    `${this.baseUrl}/patient/appointments`, { headers }
+  );
+}
+
+
+
+
 
 }

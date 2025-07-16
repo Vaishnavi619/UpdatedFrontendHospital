@@ -1,5 +1,5 @@
 <div class="container py-4">
-  <h3 class="text-center text-primary mb-4">All Prescriptions</h3>
+  <h3 class="text-center text-primary mb-4">Your Prescriptions</h3>
 
   <div *ngIf="prescriptions.length > 0; else noPrescriptions">
     <table class="table table-bordered table-striped text-center">
@@ -15,7 +15,6 @@
           <th>Duration (Days)</th>
           <th>Appointment ID</th>
           <th>Patient Name</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -30,20 +29,6 @@
           <td>{{ prescription.durationDays }}</td>
           <td>{{ prescription.appointment?.appointmentId }}</td>
           <td>{{ prescription.appointment?.patient?.fullName || 'N/A' }}</td>
-
-          <td>
-            <button 
-              class="btn btn-sm btn-warning me-2"
-              [routerLink]="['/doctor/prescriptions/update', prescription.prescriptionId]">
-              Update
-            </button>
-
-            <button class="btn btn-outline-danger"
-              type="button"
-              (click)="deletePrescription(prescription.prescriptionId)">
-              Delete
-            </button>
-          </td>
         </tr>
       </tbody>
     </table>
