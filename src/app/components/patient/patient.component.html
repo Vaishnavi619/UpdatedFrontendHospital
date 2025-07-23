@@ -2,14 +2,24 @@
   <h2 class="text-center mb-4 text-success">Patients</h2>
 
   <div class="d-flex flex-column align-items-center gap-4">
-    <!-- Register Patient Button -->
     <button class="btn btn-outline-primary btn-lg w-50" [routerLink]="['/register-patient']">
       📝 Register Patient
     </button>
 
-    <!-- View Patients Button -->
     <button class="btn btn-outline-secondary btn-lg w-50" [routerLink]="['/view-patients']">
       📋 View Patients
     </button>
-  </div>  
+
+    <!-- 📂 Add Bulk Patients (CSV Upload) -->
+    <button class="btn btn-outline-success btn-lg w-50" (click)="fileInputRef.click()">
+      📂 Add Bulk Patients
+    </button>
+
+    <!-- Hidden file input -->
+    <input type="file"
+           #fileInputRef
+           
+           (change)="onFileSelected($event)"
+           style="display: none;" />
+  </div>
 </div>

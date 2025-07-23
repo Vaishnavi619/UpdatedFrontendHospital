@@ -5,5 +5,6 @@ export interface Patient {
   gender: string;
   phone: number;
   address: string;
-  registeredDate: string; // Format: YYYY-MM-DD
+  registeredDate: string; 
+  email?: string;
 }

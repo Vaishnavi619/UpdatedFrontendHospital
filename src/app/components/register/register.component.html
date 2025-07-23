@@ -5,6 +5,7 @@
         <h2 class="text-center mb-4 text-primary">User Registration</h2>
 
         <form (ngSubmit)="onRegister()">
+          <!-- Username -->
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input
@@ -18,6 +19,7 @@
             />
           </div>
 
+          <!-- Password -->
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input
@@ -31,6 +33,21 @@
             />
           </div>
 
+          <!-- Email (NEW FIELD) -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              [(ngModel)]="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <!-- Role -->
           <div class="mb-3">
             <label for="role" class="form-label">Role</label>
             <select

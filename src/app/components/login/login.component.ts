@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service'; // ✅ fixed path
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,24 +11,22 @@ import { AuthService } from '../../services/auth.service'; // ✅ fixed path
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent {
 
-  
-  loginData = { username: '', password: '' };
+  email: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  loginUser() {
-    this.authService.login(this.loginData).subscribe({
-      next: (response: any) => {
-        this.authService.saveToken(response.token);
-        this.authService.saveRole(response.role);
-        alert('Login successful!');
-        this.router.navigate(['/dashboard']);
-      },
-      error: () => {
-        alert('Invalid credentials!');
+  sendOtp() {
+    this.authService.sendOtp(this.email).subscribe({
+  next: () => {
+    localStorage.setItem('otpEmail', this.email);  
+    alert('OTP sent to your email. Please enter it to proceed.');
+    this.router.navigate(['/verify-otp']);
+  },
+      error: (err: any) => {
+        console.error('OTP Send Error:', err);
+        alert('❌ Failed to send OTP. Check if email is registered.');
       }
     });
   }

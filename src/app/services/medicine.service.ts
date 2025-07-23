@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Medicine } from '../models/medicine';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +48,25 @@ export class MedicineService {
   deleteMedicine(id: number): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.delete(`${this.baseUrl}/${id}`, { headers });
+  }
+
+  
+  uploadMedicines(file: File): Observable<string> {
+    const token = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post(
+      'http://localhost:8080/api/medicines/upload-medicines',
+      formData,
+      { headers, responseType: 'json' }
+    ).pipe(
+      map((res: any) => res.data) // ✅ Only extract message
+    );
   }
 }

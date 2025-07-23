@@ -2,7 +2,7 @@
   <h2 class="text-center text-success mb-4">Create Prescription</h2>
 
   <form [formGroup]="prescriptionForm" (ngSubmit)="onSubmit()" class="w-50 mx-auto needs-validation">
-    
+
     <!-- Diagnosis -->
     <div class="mb-3">
       <label class="form-label">Diagnosis *</label>
@@ -24,18 +24,29 @@
       <input type="date" class="form-control" formControlName="date">
     </div>
 
-    <!-- Medicine Dropdown -->
-<div class="mb-3">
-  <label for="medicineId" class="form-label">Select Medicine *</label>
-  <select class="form-select" formControlName="medicineId" required>
-    <option value="" disabled selected>Select a medicine</option>
-    <option *ngFor="let med of medicines" [value]="med.medicineId">
-      {{ med.name }} - ₹{{ med.price }}
-    </option>
-  </select>
-</div>
+    <!-- Medicine Selection (No Ctrl Needed) -->
+    <div class="mb-3">
+      <label class="form-label">Select Medicines *</label>
+      <div class="d-flex flex-wrap gap-2">
+        <button type="button" class="btn btn-outline-primary btn-sm"
+                *ngFor="let med of medicines"
+                (click)="addMedicine(med)">
+          {{ med.name }} (₹{{ med.price }})
+        </button>
+      </div>
+      <small class="text-muted">Click buttons to select medicines</small>
+    </div>
 
-
+    <!-- Selected Medicines as Pills -->
+    <div class="mb-3" *ngIf="selectedMedicines.length > 0">
+      <label class="form-label">Selected Medicines:</label>
+      <div class="d-flex flex-wrap gap-2">
+        <span *ngFor="let med of selectedMedicines" class="badge bg-success rounded-pill">
+          {{ med.name }}
+          <button type="button" class="btn-close btn-close-white btn-sm ms-2" (click)="removeMedicine(med.medicineId)"></button>
+        </span>
+      </div>
+    </div>
 
     <!-- Dosage -->
     <div class="mb-3">
@@ -61,7 +72,7 @@
     </button>
   </form>
 
-  <!-- ✅ Toast for success -->
+  <!-- ✅ Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3" *ngIf="showToast">
     <div class="toast align-items-center text-bg-success border-0 show">
       <div class="d-flex">

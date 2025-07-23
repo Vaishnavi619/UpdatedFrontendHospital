@@ -1,8 +1,8 @@
 <div class="container mt-4">
-  <h2 class="text-center mb-4">Your Bills</h2>
+  <h2 class="text-center mb-4 text-primary fw-bold">Your Bills</h2>
 
   <div class="table-responsive">
-    <table class="table table-hover align-middle shadow-sm rounded">
+    <table class="table table-hover align-middle shadow rounded">
       <thead class="table-dark text-center">
         <tr>
           <th>Bill ID</th>
@@ -13,15 +13,17 @@
           <th>Medicine Charges</th>
           <th>Total Amount</th>
           <th>Bill Date</th>
+          <th>Status</th>
+          <th>Action</th>
         </tr>
       </thead>
 
       <tbody class="text-center">
         <tr *ngFor="let bill of bills">
-          <td><span class="badge bg-secondary">{{ bill.billId }}</span></td>
-          <td>{{ bill.patient.fullName }}</td>
+          <td><span class="badge rounded-pill bg-secondary px-3 py-2">{{ bill.billId }}</span></td>
+          <td><strong>{{ bill.patient.fullName }}</strong></td>
           <td>
-            <span class="badge bg-info text-dark">
+            <span class="badge rounded-pill bg-info text-dark px-3">
               {{ bill.prescription.prescriptionId }}
             </span>
           </td>
@@ -30,6 +32,38 @@
           <td>₹{{ bill.medicineCharges }}</td>
           <td><strong class="text-success">₹{{ bill.totalAmount }}</strong></td>
           <td>{{ bill.billDate }}</td>
+
+          <!-- 💰 Stylized Payment Status Badge -->
+          <td>
+            <span
+              [ngClass]="{
+                'badge rounded-pill bg-success px-3 py-2': bill.paymentStatus === 'PAID',
+                'badge rounded-pill bg-danger px-3 py-2': bill.paymentStatus !== 'PAID'
+              }"
+              [attr.title]="bill.paymentStatus === 'PAID' ? 'Payment complete' : 'Payment pending'"
+            >
+              <i
+                [ngClass]="{
+                  'bi bi-check-circle-fill me-1': bill.paymentStatus === 'PAID',
+                  'bi bi-exclamation-circle-fill me-1': bill.paymentStatus !== 'PAID'
+                }"
+              ></i>
+              {{ bill.paymentStatus === 'PAID' ? 'PAID' : 'UNPAID' }}
+            </span>
+          </td>
+
+          <!-- 🧾 Payment Button -->
+          <td>
+            <button
+              class="btn btn-outline-primary btn-sm rounded-pill"
+              [disabled]="bill.paymentStatus === 'PAID'"
+              (click)="payBill(bill)"
+              [attr.title]="bill.paymentStatus === 'PAID' ? 'Already Paid' : 'Click to pay'"
+            >
+              <i class="bi bi-wallet2 me-1"></i>
+              PAY
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

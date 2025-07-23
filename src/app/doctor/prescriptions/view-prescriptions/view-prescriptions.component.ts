@@ -17,18 +17,18 @@ export class ViewPrescriptionsComponent implements OnInit {
   constructor(private http: HttpClient,private prescriptionService:PrescriptionService) {}
 
    ngOnInit(): void {
-    this.prescriptionService.getPrescriptionsForLoggedInPatient().subscribe({
-  next: (response) => {
-    console.log("✅ Loaded patient prescriptions:", response);
-    this.prescriptions = response.data;
-  },
-  error: (err) => {
-    console.error("❌ Error loading prescriptions:", err);
-  }
-});
+  this.prescriptionService.getPrescriptionsForLoggedInDoctor().subscribe({
+    next: (response: any) => {
+      console.log("✅ Doctor prescriptions loaded:", response);
+      this.prescriptions = response.data; // ✅ FIXED
+    },
+    error: (err) => {
+      console.error("❌ Error loading prescriptions:", err);
+    }
+  });
+}
 
 
-  }
 
   // ✅ Fetch all prescriptions
   fetchPrescriptions(): void {

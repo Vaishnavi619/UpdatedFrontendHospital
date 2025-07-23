@@ -6,27 +6,29 @@
       <input type="text" class="form-control" [(ngModel)]="patient.fullName" name="fullName" required>
     </div>
 
-   <div class="mb-3">
-  <label>Age</label>
-  <input
-    type="text"
-    class="form-control"
-    [(ngModel)]="patient.age"
-    name="age"
-    #ageField="ngModel"
-    pattern="^[1-9][0-9]*$"
-    required
-    maxlength="3"
-    (keypress)="allowOnlyDigitss($event)"
-  />
-  <div *ngIf="ageField.invalid && (ageField.dirty || ageField.touched)" class="text-danger mt-1">
-    <div *ngIf="ageField.errors?.['required']">Age is required.</div>
-    <div *ngIf="ageField.errors?.['pattern']">Age must be a valid number (not start with 0).</div>
-  </div>
-</div>
+    <div class="mb-3">
+      <label>Email (optional)</label>
+      <input type="email" class="form-control" [(ngModel)]="patient.email" name="email">
+    </div>
 
-
-
+    <div class="mb-3">
+      <label>Age</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="patient.age"
+        name="age"
+        #ageField="ngModel"
+        pattern="^[1-9][0-9]*$"
+        required
+        maxlength="3"
+        (keypress)="allowOnlyDigitss($event)"
+      />
+      <div *ngIf="ageField.invalid && (ageField.dirty || ageField.touched)" class="text-danger mt-1">
+        <div *ngIf="ageField.errors?.['required']">Age is required.</div>
+        <div *ngIf="ageField.errors?.['pattern']">Age must be a valid number (not start with 0).</div>
+      </div>
+    </div>
 
     <div class="mb-3">
       <label>Gender</label>
@@ -37,31 +39,27 @@
         <option>Other</option>
       </select>
     </div>
-      
-   <div class="mb-3">
-  <label>Phone</label>
-  <div class="input-group">
-    <span class="input-group-text">+91</span>
-    <input
-      type="tel"
-      class="form-control"
-      [(ngModel)]="patient.phone"
-      name="phone"
-      pattern="^[0-9]{10}$"
-      maxlength="10"
-      required
-      (keypress)="allowOnlyDigits($event)"
-      #phoneField="ngModel"
-    />
-  </div>
 
-  <div *ngIf="form.submitted && form.controls['phone']?.invalid" class="text-danger">
-    Phone number must be exactly 10 digits.
-  </div>
-</div>
-
-
-
+    <div class="mb-3">
+      <label>Phone</label>
+      <div class="input-group">
+        <span class="input-group-text">+91</span>
+        <input
+          type="tel"
+          class="form-control"
+          [(ngModel)]="patient.phone"
+          name="phone"
+          pattern="^[0-9]{10}$"
+          maxlength="10"
+          required
+          (keypress)="allowOnlyDigits($event)"
+          #phoneField="ngModel"
+        />
+      </div>
+      <div *ngIf="form.submitted && form.controls['phone']?.invalid" class="text-danger">
+        Phone number must be exactly 10 digits.
+      </div>
+    </div>
 
     <div class="mb-3">
       <label>Address</label>
@@ -69,17 +67,16 @@
     </div>
 
     <div class="mb-3">
-  <label>Registered Date</label>
-  <input
-    type="date"
-    class="form-control"
-    [(ngModel)]="patient.registeredDate"
-    name="registeredDate"
-    [min]="todayDate"
-    required
-  />
-</div>
-
+      <label>Registered Date</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="patient.registeredDate"
+        name="registeredDate"
+        [min]="todayDate"
+        required
+      />
+    </div>
 
     <button class="btn btn-success w-100">Register</button>
   </form>

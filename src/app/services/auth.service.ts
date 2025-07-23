@@ -11,17 +11,18 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // ✅ Login
+  // ✅ Login (Step 1: Sends OTP)
   login(data: any): Observable<any> {
     return this.http.post(`${this.BASE_URL}/login`, data);
   }
 
-  // ✅ Register
+  
+  // ✅ Register user
   register(user: any) {
     return this.http.post('http://localhost:8080/api/users', user);
   }
 
-  // ✅ Save token
+  // ✅ Save token in local storage
   saveToken(token: string) {
     localStorage.setItem('token', token);
   }
@@ -41,7 +42,7 @@ export class AuthService {
     return localStorage.getItem('role');
   }
 
-  // ✅ Clear all auth data
+  // ✅ Clear token and role
   clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
@@ -49,16 +50,26 @@ export class AuthService {
 
   // ✅ Logout
   logout(): void {
-    this.clearAuthData();              // clears token and role
-    this.router.navigate(['/signin']); // navigate to sign-in page
+    this.clearAuthData();
+    this.router.navigate(['/signin']); // or use '/login' if that's your login route
   }
 
+  // ✅ Decode username from JWT token
   getLoggedInUsername(): string | null {
-  const token = localStorage.getItem('token');
-  if (!token) return null;
+    const token = localStorage.getItem('token');
+    if (!token) return null;
 
-  const payload = JSON.parse(atob(token.split('.')[1]));
-  return payload.sub; // 'sub' contains the username
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.sub; // 'sub' contains the username
+  }
+  // ✅ Add this method in AuthService
+sendOtp(email: string) {
+  return this.http.post(`${this.BASE_URL}/login`, { email });
 }
+
+verifyOtp(data: { email: string; otp: string }) {
+  return this.http.post(`${this.BASE_URL}/verify-otp`, data);
+}
+
 
 }

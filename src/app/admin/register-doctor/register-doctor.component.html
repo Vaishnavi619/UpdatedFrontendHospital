@@ -2,6 +2,7 @@
   <h2 class="text-center text-primary mb-4">Register Doctor</h2>
 
   <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+
     <div class="mb-3">
       <label for="doctorName">Doctor Name</label>
       <input type="text" class="form-control" formControlName="doctorName">
@@ -13,36 +14,50 @@
     </div>
 
     <div class="mb-3">
-  <label for="experience">Experience</label>
-  <input
-    type="text"
-    id="experience"
-    class="form-control"
-    formControlName="experience"
-    pattern="^[1-9][0-9]*$"
-    maxlength="2"
-    (keypress)="allowOnlyDigits($event)"
-  />
-  <div
-    *ngIf="doctorForm.get('experience')?.invalid && (doctorForm.get('experience')?.dirty || doctorForm.get('experience')?.touched)"
-    class="text-danger mt-1"
-  >
-    <div *ngIf="doctorForm.get('experience')?.errors?.['pattern']">
-      Experience must not start with 0 and should be a number.
+      <label for="experience">Experience</label>
+      <input
+        type="text"
+        id="experience"
+        class="form-control"
+        formControlName="experience"
+        maxlength="2"
+        pattern="^[1-9][0-9]*$"
+        (keypress)="allowOnlyDigits($event)"
+      />
+      <div
+        *ngIf="doctorForm.get('experience')?.invalid && (doctorForm.get('experience')?.dirty || doctorForm.get('experience')?.touched)"
+        class="text-danger mt-1"
+      >
+        <div *ngIf="doctorForm.get('experience')?.errors?.['pattern']">
+          Experience must not start with 0 and should be a number.
+        </div>
+        <div *ngIf="doctorForm.get('experience')?.errors?.['required']">
+          Experience is required.
+        </div>
+      </div>
     </div>
-    <div *ngIf="doctorForm.get('experience')?.errors?.['required']">
-      Experience is required.
-    </div>
-  </div>
-</div>
-
-
 
     <div class="mb-3">
-  <label for="timings">Timings</label>
-  <input type="time" class="form-control" formControlName="timings">
-</div>
+      <label for="timings">Timings</label>
+      <input type="time" class="form-control" formControlName="timings">
+    </div>
 
+    <!-- ✅ NEW EMAIL FIELD -->
+    <div class="mb-3">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" formControlName="email">
+      <div
+        *ngIf="doctorForm.get('email')?.invalid && (doctorForm.get('email')?.dirty || doctorForm.get('email')?.touched)"
+        class="text-danger mt-1"
+      >
+        <div *ngIf="doctorForm.get('email')?.errors?.['required']">
+          Email is required.
+        </div>
+        <div *ngIf="doctorForm.get('email')?.errors?.['email']">
+          Enter a valid email address.
+        </div>
+      </div>
+    </div>
 
     <button type="submit" class="btn btn-primary w-100">Register</button>
   </form>

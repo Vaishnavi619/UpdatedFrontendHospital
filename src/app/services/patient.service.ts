@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Patient } from '../models/patient';
 
@@ -48,6 +48,26 @@ export class PatientService {
   getAllDoctors() {
   return this.http.get<any[]>('http://localhost:8080/api/doctors');
 }
+
+uploadPatients(file: File): Observable<string> {
+  const token = localStorage.getItem('token');
+  let headers = new HttpHeaders();
+  if (token) {
+    headers = headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  const formData: FormData = new FormData();
+  formData.append('file', file);
+
+  return this.http.post<any>(  // 👈 Make sure it's `any` to access response.data
+    'http://localhost:8080/api/patients/upload',
+    formData,
+    { headers }
+  ).pipe(
+    map(response => response.data)  // 👈 This will return only the message
+  );
 }
 
 
+
+}

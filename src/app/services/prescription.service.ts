@@ -24,12 +24,15 @@ export class PrescriptionService {
     return this.http.post<Prescription>(url, prescriptionData, { headers });
   }
   
-getPrescriptionsForLoggedInDoctor(): Observable<any> {
+getPrescriptionsForLoggedInDoctor(): Observable<Prescription[]> {
   const token = localStorage.getItem('token');
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
 
-  return this.http.get<any>(`${this.baseUrl}/doctor/view-prescriptions`, { headers });
+  return this.http.get<Prescription[]>(`${this.baseUrl}/doctor/view-prescriptions`, { headers });
 }
+
 getPrescriptionsForLoggedInPatient(): Observable<any> {
   const token = localStorage.getItem('token');
   const headers = new HttpHeaders({

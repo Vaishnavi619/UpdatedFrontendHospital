@@ -2,15 +2,15 @@
   <h3 class="text-center text-primary mb-4">All Prescriptions</h3>
 
   <div *ngIf="prescriptions.length > 0; else noPrescriptions">
-    <table class="table table-bordered table-striped text-center">
+    <table class="table table-bordered table-hover text-center">
       <thead class="table-dark">
         <tr>
           <th>ID</th>
           <th>Diagnosis</th>
           <th>Advice</th>
           <th>Date</th>
-          <th>Medicine Name</th>
-          <th>Price (₹)</th>
+          <th>Medicine Names</th>  <!-- ✅ UPDATED -->
+          <th>Total Price (₹)</th> <!-- ✅ UPDATED -->
           <th>Dosage</th>
           <th>Duration (Days)</th>
           <th>Appointment ID</th>
@@ -24,13 +24,24 @@
           <td>{{ prescription.diagnosis }}</td>
           <td>{{ prescription.advice || '-' }}</td>
           <td>{{ prescription.date }}</td>
-          <td>{{ prescription.medicineName || 'N/A' }}</td>
-          <td>{{ prescription.medicinePrice || 'N/A' }}</td>
+
+          <!-- ✅ Medicine names shown clearly -->
+          <td>
+            <span *ngIf="prescription.medicineName; else noMeds">
+              {{ prescription.medicineName }}
+            </span>
+            <ng-template #noMeds>N/A</ng-template>
+          </td>
+
+          <!-- ✅ Total price formatted -->
+          <td>₹{{ prescription.medicinePrice || 0 }}</td>
+
           <td>{{ prescription.dosage }}</td>
           <td>{{ prescription.durationDays }}</td>
           <td>{{ prescription.appointment?.appointmentId }}</td>
           <td>{{ prescription.appointment?.patient?.fullName || 'N/A' }}</td>
 
+          <!-- ✅ Action buttons -->
           <td>
             <button 
               class="btn btn-sm btn-warning me-2"

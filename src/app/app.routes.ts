@@ -38,6 +38,7 @@ import { ContactComponent } from './components/contact.component';
 import { PatientViewAppointmentComponent } from './components/patient-view-appointment/patient-view-appointment.component';
 import { PatientViewPrescriptionComponent } from './components/patient-view-prescription/patient-view-prescription.component';
 import { PatientViewBillComponent } from './components/patient-view-bill/patient-view-bill.component';
+import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 export const routes: Routes = [
 
   { path: '', component: HomeComponent },
@@ -89,8 +90,7 @@ export const routes: Routes = [
 {
   path: 'patient/bills',
   component: PatientViewBillComponent
-}
+},
 
-
-
+  { path: 'verify-otp', component: VerifyOtpComponent }
 ];

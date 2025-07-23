@@ -5,25 +5,40 @@
     <table class="table table-bordered table-striped align-middle text-center">
       <thead class="table-light">
         <tr>
-          <th>Appointment Id</th>
+          <th>#</th>
           <th>Doctor</th>
           <th>Patient</th>
           <th>Date</th>
           <th>Time</th>
           <th>Reason</th>
+          <th>Actions</th> <!-- ✅ Add column for actions -->
         </tr>
       </thead>
+
       <tbody *ngIf="appointments && appointments.length > 0">
- <tr *ngFor="let appt of appointments; let i = index">
+        <tr *ngFor="let appt of appointments; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ appt.doctor?.doctorName }}</td>
           <td>{{ appt.patient?.fullName }}</td>
           <td>{{ appt.appointmentDate }}</td>
           <td>{{ appt.appointmentTime }}</td>
           <td>{{ appt.reason }}</td>
-  </tr>
-</tbody>
+          <td>
+            <!-- ✅ Auto route with query param -->
+            <button class="btn btn-sm btn-primary"
+                    [routerLink]="['/doctor/prescriptions/create']"
+                    [queryParams]="{ appointmentId: appt.appointmentId }">
+              Create Prescription
+            </button>
+          </td>
+        </tr>
+      </tbody>
 
+      <tbody *ngIf="appointments.length === 0">
+        <tr>
+          <td colspan="7">No appointments available</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>

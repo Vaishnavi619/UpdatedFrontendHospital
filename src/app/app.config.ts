@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -29,7 +29,9 @@ export const appConfig: ApplicationConfig = {
       RouterModule,
       FormsModule,
       ReactiveFormsModule,
-      CommonModule
+      CommonModule,
+      HttpClientModule,
+      
     )
   ]
 };
