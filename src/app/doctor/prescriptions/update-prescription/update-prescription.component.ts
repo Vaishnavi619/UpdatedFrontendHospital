@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BackButtonComponent } from '../../../components/shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-update-prescription',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // ✅ Add ReactiveFormsModule here
+  imports: [CommonModule, ReactiveFormsModule,BackButtonComponent], // ✅ Add ReactiveFormsModule here
   templateUrl: './update-prescription.component.html',
   styleUrls: ['./update-prescription.component.css']
 })
@@ -42,7 +43,7 @@ export class UpdatePrescriptionComponent implements OnInit {
   }
 
   loadPrescription(): void {
-    this.http.get<any>(`http://localhost:8080/api/prescriptions/${this.prescriptionId}`).subscribe({
+    this.http.get<any>(`http://localhost:8081/api/prescriptions/${this.prescriptionId}`).subscribe({
       next: (response) => {
         const prescription = response.data;
         this.prescriptionForm.patchValue({
@@ -64,7 +65,7 @@ export class UpdatePrescriptionComponent implements OnInit {
       Authorization: `Bearer ${token}`
     });
 
-    this.http.get<any>('http://localhost:8080/api/medicines', { headers }).subscribe({
+    this.http.get<any>('http://localhost:8081/api/medicines', { headers }).subscribe({
       next: (res) => {
         this.medicines = res.data;
       },
@@ -96,7 +97,7 @@ export class UpdatePrescriptionComponent implements OnInit {
     };
 
     this.http.put(
-      `http://localhost:8080/api/prescriptions/${this.prescriptionId}`,
+      `http://localhost:8081/api/prescriptions/${this.prescriptionId}`,
       formData,
       { headers }
     ).subscribe({

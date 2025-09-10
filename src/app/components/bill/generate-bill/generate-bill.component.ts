@@ -10,13 +10,14 @@ import { PrescriptionService } from '../../../services/prescription.service';
 import { BillService } from '../../../services/bill.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { BackButtonComponent } from '../../shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-generate-bill',
   standalone: true,
   templateUrl: './generate-bill.component.html',
   styleUrls: ['./generate-bill.component.css'],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,BackButtonComponent],
 })
 export class GenerateBillComponent implements OnInit {
   billForm!: FormGroup;

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private BASE_URL = 'http://localhost:8080/auth';
+  private BASE_URL = 'http://localhost:8081/auth';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -19,7 +19,7 @@ export class AuthService {
   
   // ✅ Register user
   register(user: any) {
-    return this.http.post('http://localhost:8080/api/users', user);
+    return this.http.post('http://localhost:8081/api/users', user);
   }
 
   // ✅ Save token in local storage

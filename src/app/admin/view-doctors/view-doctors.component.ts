@@ -3,16 +3,20 @@ import { DoctorService } from '../../services/doctor.service';
 import { Doctor } from '../../models/doctor';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { BackButtonComponent } from '../../components/shared/back-button/back-button.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-view-doctors',
   templateUrl: './view-doctors.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule,BackButtonComponent,FormsModule    ],
 })
 export class ViewDoctorsComponent implements OnInit {
   doctors: Doctor[] = [];
-
+  page: number = 1;
+  pageSize: number = 5;
+  searchText: string = '';
   constructor(
     private doctorService: DoctorService,
     private router: Router
@@ -34,7 +38,7 @@ export class ViewDoctorsComponent implements OnInit {
       this.doctorService.deleteDoctor(doctorId).subscribe({
         next: () => {
           alert('✅ Doctor deleted successfully!');
-          this.loadDoctors(); // Refresh the list
+          this.loadDoctors(); 
         },
         error: (error) => {
           if (error.status === 400 && error.error?.data?.includes('associated with one or more appointments')) {
@@ -49,4 +53,31 @@ export class ViewDoctorsComponent implements OnInit {
       });
     }
   }
+
+  get paginatedDoctors(): Doctor[] {
+  const start = (this.page - 1) * this.pageSize;
+  return this.filteredDoctors.slice(start, start + this.pageSize);
+}
+
+get totalPages(): number {
+  return Math.ceil(this.filteredDoctors.length / this.pageSize);
+}
+
+goToPage(pageNumber: number): void {
+  if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+    this.page = pageNumber;
+  }
+}
+get filteredDoctors(): Doctor[] {
+  const search = this.searchText.toLowerCase();
+  return this.doctors.filter((d) =>
+    d.doctorName.toLowerCase().includes(search) ||
+    d.specialization.toLowerCase().includes(search) ||
+    d.experience.toString().includes(search) ||
+    d.timings.toLowerCase().includes(search)
+  );
+}
+setAvailability(doctorId: number) {
+  this.router.navigate(['/doctor-availability', doctorId]);
+}
 }

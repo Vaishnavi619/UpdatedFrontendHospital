@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MedicineService } from '../../services/medicine.service';
+import { BackButtonComponent } from '../../components/shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-medicine-dashboard',
   templateUrl: './medicine-dashboard.component.html',
   styleUrls: ['./medicine-dashboard.component.css'],
-  imports:[RouterModule]
+  imports:[RouterModule,BackButtonComponent]
 })
 export class MedicineDashboardComponent {
   constructor(private http: HttpClient,private medicineService:MedicineService) {}

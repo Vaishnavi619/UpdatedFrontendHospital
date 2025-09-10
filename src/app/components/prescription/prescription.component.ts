@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { BackButtonComponent } from '../shared/back-button/back-button.component';
 @Component({
   selector: 'app-prescription',
   templateUrl: './prescription.component.html',
-  styleUrls: ['./prescription.component.css']
+  styleUrls: ['./prescription.component.css'],
+  imports: [BackButtonComponent]
+  
 })
 export class PrescriptionComponent {
   constructor(private router: Router,private http: HttpClient) {}

@@ -3,16 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router'; // ✅ for navigation
 import { AppointmentService } from '../../../services/appointment.service'; // ✅ import your service
+import { BackButtonComponent } from '../../shared/back-button/back-button.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-view-appointment',
   templateUrl: './view-appointments.component.html',
   styleUrls: ['./view-appointments.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule,BackButtonComponent,FormsModule]
 })
 export class ViewAppointmentComponent implements OnInit {
   appointments: any[] = [];
+  page: number = 1;
+  pageSize: number = 5;
+  searchText: string = '';
 
   constructor(
     private http: HttpClient,
@@ -26,7 +31,7 @@ export class ViewAppointmentComponent implements OnInit {
 
   // ✅ Method to load all appointments
   loadAppointments(): void {
-    this.http.get<any>('http://localhost:8080/api/appointments').subscribe({
+    this.http.get<any>('http://localhost:8081/api/appointments').subscribe({
       next: (res) => {
         console.log("Full Response:", res);
         this.appointments = res.data;
@@ -64,6 +69,30 @@ export class ViewAppointmentComponent implements OnInit {
       }
     });
   }
+}
+get paginatedAppointments() {
+    const start = (this.page - 1) * this.pageSize;
+    return this.appointments.slice(start, start + this.pageSize);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.appointments.length / this.pageSize);
+  }
+
+  goToPage(pageNumber: number): void {
+    if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+      this.page = pageNumber;
+    }
+  }
+  get filteredAppointments(): any[] {
+  const search = this.searchText.toLowerCase();
+  return this.appointments.filter(appt =>
+    appt.doctor?.doctorName?.toLowerCase().includes(search) ||
+    appt.patient?.fullName?.toLowerCase().includes(search) ||
+    appt.appointmentDate?.toLowerCase().includes(search) ||
+    appt.appointmentTime?.toLowerCase().includes(search) ||
+    appt.reason?.toLowerCase().includes(search)
+  );
 }
 
 }

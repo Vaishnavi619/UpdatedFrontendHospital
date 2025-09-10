@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; // ✅ Import this
+import { BackButtonComponent } from '../shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-appointment',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule], // ✅ Add RouterModule here
+  imports: [CommonModule, FormsModule, RouterModule,BackButtonComponent], // ✅ Add RouterModule here
   templateUrl: './appointment.component.html',
   styleUrls: ['./appointment.component.css']
 })
@@ -24,7 +25,7 @@ export class AppointmentComponent {
   addAppointment() {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    this.http.post('http://localhost:8080/api/appointments', this.appointment, { headers }).subscribe({
+    this.http.post('http://localhost:8081/api/appointments', this.appointment, { headers }).subscribe({
       next: () => {
         alert('✅ Appointment scheduled successfully!');
         this.resetForm();

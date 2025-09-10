@@ -1,7 +1,21 @@
+<app-back-button></app-back-button>
 <div class="container mt-4">
   <h2 class="text-center mb-4">All Bills</h2>
 
-  <div class="table-responsive">
+  <div *ngIf="paginatedBills.length === 0" class="alert alert-info text-center">
+    No bills available.
+  </div>
+  <div class="d-flex justify-content-end mb-3">
+  <input
+    type="text"
+    class="form-control w-25"
+    placeholder="🔍 Search bills..."
+    [(ngModel)]="searchText"
+    (ngModelChange)="currentPage = 1"
+  />
+</div>
+
+  <div *ngIf="paginatedBills.length > 0" class="table-responsive">
     <table class="table table-hover align-middle shadow-sm rounded">
       <thead class="table-dark text-center">
         <tr>
@@ -18,10 +32,10 @@
       </thead>
 
       <tbody class="text-center">
-        <tr *ngFor="let bill of bills">
+        <tr *ngFor="let bill of paginatedBills">
           <td><span class="badge bg-secondary">{{ bill.billId }}</span></td>
           <td>{{ bill.patient.fullName }}</td>
-          <td><span class="badge bg-info text-dark"><td>{{ bill.prescription.prescriptionId }}</td></span></td>
+          <td><span class="badge bg-info text-dark">{{ bill.prescription.prescriptionId }}</span></td>
           <td>{{ bill.prescription.diagnosis }}</td>
           <td>₹{{ bill.consultationFee }}</td>
           <td>₹{{ bill.medicineCharges }}</td>
@@ -38,5 +52,26 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- ✅ Pagination Controls -->
+    <div class="d-flex justify-content-center align-items-center gap-3 mt-3">
+      <button
+        class="btn btn-outline-secondary btn-sm"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        ← Prev
+      </button>
+
+      <span class="fw-semibold">Page {{ currentPage }} of {{ totalPages }}</span>
+
+      <button
+        class="btn btn-outline-secondary btn-sm"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Next →
+      </button>
+    </div>
   </div>
 </div>

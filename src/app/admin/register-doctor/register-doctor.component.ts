@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { BackButtonComponent } from '../../components/shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-register-doctor',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,BackButtonComponent],
   templateUrl: './register-doctor.component.html',
   styleUrls: ['./register-doctor.component.css']
 })
@@ -38,7 +39,7 @@ export class RegisterDoctorComponent implements OnInit {
 
     const doctorData = this.doctorForm.value;
 
-    this.http.post('http://localhost:8080/api/doctors', doctorData).subscribe({
+    this.http.post('http://localhost:8081/api/doctors', doctorData).subscribe({
       next: () => {
         alert('Doctor registered successfully');
         this.router.navigate(['/admin/view-doctors']);

@@ -3,12 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BillService } from '../../../services/bill.service';
 import { CommonModule } from '@angular/common';
+import { BackButtonComponent } from '../../shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-update-bill',
   templateUrl: './update-bill.component.html',
   styleUrls: ['./update-bill.component.css'],
-  imports:[FormsModule,ReactiveFormsModule,CommonModule]
+  imports:[FormsModule,ReactiveFormsModule,CommonModule,BackButtonComponent]
 })
 export class UpdateBillComponent implements OnInit {
   billForm!: FormGroup;

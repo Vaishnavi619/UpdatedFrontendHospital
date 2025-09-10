@@ -1,10 +1,19 @@
+<app-back-button></app-back-button>
 <div class="container mt-4">
   <h2 class="text-center">Your Appointments</h2>
 
   <div *ngIf="appointments.length === 0" class="alert alert-info">
     No appointments scheduled.
   </div>
-
+<div class="d-flex justify-content-end mb-3">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="🔍 Search appointments..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="currentPage = 1"
+    />
+  </div>
   <div *ngIf="appointments.length > 0" class="table-responsive">
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
@@ -18,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let appt of appointments; let i = index">
+        <tr *ngFor="let appt of paginatedAppointments; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ appt.doctor?.doctorName }}</td>
           <td>{{ appt.patient?.fullName }}</td>
@@ -28,5 +37,15 @@
         </tr>
       </tbody>
     </table>
+     <!-- ✅ Pagination Controls -->
+    <div class="text-center mt-3">
+      <button class="btn btn-outline-secondary me-2" (click)="prevPage()" [disabled]="currentPage === 1">
+        ← Prev
+      </button>
+      <span class="fw-semibold">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="btn btn-outline-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next →
+      </button>
+    </div>
   </div>
 </div>

@@ -3,12 +3,13 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { BackButtonComponent } from '../../shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-update-patient',
   templateUrl: './update-patient.component.html',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule, CommonModule]
+  imports: [RouterModule, ReactiveFormsModule, CommonModule,BackButtonComponent]
 })
 export class UpdatePatientComponent implements OnInit {
   patientForm!: FormGroup;
@@ -38,7 +39,7 @@ export class UpdatePatientComponent implements OnInit {
   loadPatientData() {
   const token = localStorage.getItem('token'); // get the JWT from local storage
 
-  this.http.get<any>(`http://localhost:8080/api/patients/${this.patientId}`, {
+  this.http.get<any>(`http://localhost:8081/api/patients/${this.patientId}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -64,7 +65,7 @@ export class UpdatePatientComponent implements OnInit {
     if (this.patientForm.invalid) return;
 
     const updatedPatient = this.patientForm.value;
-    this.http.put(`http://localhost:8080/api/patients/${this.patientId}`, updatedPatient).subscribe({
+    this.http.put(`http://localhost:8081/api/patients/${this.patientId}`, updatedPatient).subscribe({
       next: () => {
         alert('Patient updated successfully');
         this.router.navigate(['/view-patients']);

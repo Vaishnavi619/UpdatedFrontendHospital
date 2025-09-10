@@ -1,7 +1,7 @@
+<app-back-button></app-back-button>
 <div class="container mt-4">
   <h2 class="text-center mb-4 text-primary fw-bold">Your Bills</h2>
-
-  <div class="table-responsive">
+<div class="table-responsive">
     <table class="table table-hover align-middle shadow rounded">
       <thead class="table-dark text-center">
         <tr>
@@ -17,7 +17,6 @@
           <th>Action</th>
         </tr>
       </thead>
-
       <tbody class="text-center">
         <tr *ngFor="let bill of bills">
           <td><span class="badge rounded-pill bg-secondary px-3 py-2">{{ bill.billId }}</span></td>
@@ -32,8 +31,6 @@
           <td>₹{{ bill.medicineCharges }}</td>
           <td><strong class="text-success">₹{{ bill.totalAmount }}</strong></td>
           <td>{{ bill.billDate }}</td>
-
-          <!-- 💰 Stylized Payment Status Badge -->
           <td>
             <span
               [ngClass]="{
@@ -51,18 +48,27 @@
               {{ bill.paymentStatus === 'PAID' ? 'PAID' : 'UNPAID' }}
             </span>
           </td>
-
-          <!-- 🧾 Payment Button -->
           <td>
-            <button
-              class="btn btn-outline-primary btn-sm rounded-pill"
-              [disabled]="bill.paymentStatus === 'PAID'"
-              (click)="payBill(bill)"
-              [attr.title]="bill.paymentStatus === 'PAID' ? 'Already Paid' : 'Click to pay'"
-            >
-              <i class="bi bi-wallet2 me-1"></i>
-              PAY
-            </button>
+            <ng-container *ngIf="bill.paymentStatus !== 'PAID'">
+              <button
+                class="btn btn-outline-primary btn-sm rounded-pill"
+                (click)="payBill(bill)"
+                title="Click to pay"
+              >
+                <i class="bi bi-wallet2 me-1"></i>
+                PAY
+              </button>
+            </ng-container>
+            <ng-container *ngIf="bill.paymentStatus === 'PAID'">
+              <button
+                class="btn btn-outline-success btn-sm rounded-pill"
+                (click)="downloadInvoice(bill.billId)"
+                title="Download invoice"
+              >
+                <i class="bi bi-download me-1"></i>
+                INVOICE
+              </button>
+            </ng-container>
           </td>
         </tr>
       </tbody>

@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { AuthInterceptor } from './auth.interceptor';
+
+// ✅ Import NgChartsModule
+import { NgChartsModule } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,14 +27,14 @@ export const appConfig: ApplicationConfig = {
       multi: true
     },
 
-    // ✅ Import modules required for standalone components
+    // ✅ Import necessary Angular modules and ng2-charts
     importProvidersFrom(
       RouterModule,
       FormsModule,
       ReactiveFormsModule,
       CommonModule,
       HttpClientModule,
-      
+      NgChartsModule          // ✅ This line enables chart support!
     )
   ]
 };

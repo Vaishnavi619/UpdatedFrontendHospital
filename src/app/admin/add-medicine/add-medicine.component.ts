@@ -1,52 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MedicineService } from '../../services/medicine.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { BackButtonComponent } from '../../components/shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-add-medicine',
   templateUrl: './add-medicine.component.html',
-  imports:[ReactiveFormsModule,CommonModule]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,BackButtonComponent]
 })
 export class AddMedicineComponent implements OnInit {
   medicineForm!: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private medicineService: MedicineService,
-    private router: Router
-  ) {}
+  constructor(private fb: FormBuilder, private medicineService: MedicineService) {}
 
   ngOnInit(): void {
     this.medicineForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required],
-     price: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
-  quantityLeft: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]]
+      price: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
+      isDiscontinued: [false, Validators.required],
+      manufacturerName: ['', Validators.required],
+      type: ['', Validators.required],
+      packSizeLabel: ['', Validators.required],
+      shortComposition1: ['', Validators.required],
+      shortComposition2: ['']
     });
   }
 
-  onSubmit(): void {
+  // ✅ Allow only digits for price field
+  allowOnlyDigits(event: KeyboardEvent) {
+    if (!/[0-9]/.test(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  // ✅ Submit Form
+  onSubmit() {
     if (this.medicineForm.valid) {
       this.medicineService.addMedicine(this.medicineForm.value).subscribe({
-        next: () => {
-          alert('Medicine added successfully');
-          this.router.navigate(['/admin/view-medicines']); // update as needed
+        next: (res) => {
+          alert('✅ Medicine added successfully!');
+          this.medicineForm.reset({ isDiscontinued: false });
         },
         error: (err) => {
-          alert('Failed to add medicine');
           console.error(err);
+          alert('❌ Failed to add medicine');
         }
       });
     }
   }
- allowOnlyDigits(event: KeyboardEvent): void {
-  const charCode = event.key.charCodeAt(0);
-  if (charCode < 48 || charCode > 57) {
-    event.preventDefault();
-  }
-}
-
-
 }

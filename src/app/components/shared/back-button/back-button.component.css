@@ -1,0 +1,22 @@
+.back-btn {
+  position: fixed;
+  top: 90px; /* below navbar */
+  left: 20px;
+  padding: 10px 18px;
+  background-color: #010408; /* Bootstrap primary */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 999;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: #020407;
+  transform: scale(1.05);
+}
+

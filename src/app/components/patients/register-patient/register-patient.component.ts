@@ -4,13 +4,14 @@ import { PatientService } from '../../../services/patient.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { BackButtonComponent } from '../../shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-register-patient',
   templateUrl: './register-patient.component.html',
   styleUrls: ['./register-patient.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule,BackButtonComponent]
 })
 export class RegisterPatientComponent implements OnInit {
   patient: Patient = {

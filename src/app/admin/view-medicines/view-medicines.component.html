@@ -1,24 +1,50 @@
+<app-back-button></app-back-button>
 <div class="container py-4">
   <h2 class="text-center text-success mb-4">List of Medicines</h2>
 
-  <table class="table table-bordered table-hover">
+  <!-- 🔍 Search bar -->
+  <div class="d-flex justify-content-end mb-3">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="🔍 Search medicines..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="page = 1"
+    />
+  </div>
+
+  <!-- 📋 Medicines table -->
+  <table class="table table-bordered table-hover" *ngIf="filteredMedicines.length > 0; else noData">
     <thead class="table-success text-center">
       <tr>
         <th>SL No</th>
         <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Quantity Left</th>
+        <th>Price (₹)</th>
+        <th>Manufacturer</th>
+        <th>Type</th>
+        <th>Pack Size</th>
+        <th>Composition 1</th>
+        <th>Composition 2</th>
+        <th>Discontinued?</th>
         <th>Actions</th>
       </tr>
     </thead>
+
     <tbody class="text-center">
-      <tr *ngFor="let medicine of medicines; let i = index">
-        <td>{{ i + 1 }}</td>
+      <tr *ngFor="let medicine of paginatedMedicines; let i = index">
+        <td>{{ (page - 1) * pageSize + i + 1 }}</td>
         <td>{{ medicine.name }}</td>
-        <td>{{ medicine.description }}</td>
-        <td>{{ medicine.price }}</td>
-        <td>{{ medicine.quantityLeft }}</td>
+        <td>₹{{ medicine.price }}</td>
+        <td>{{ medicine.manufacturerName }}</td>
+        <td>{{ medicine.type }}</td>
+        <td>{{ medicine.packSizeLabel }}</td>
+        <td>{{ medicine.shortComposition1 }}</td>
+        <td>{{ medicine.shortComposition2 }}</td>
+        <td>
+          <span class="badge" [ngClass]="medicine.discontinued ? 'bg-danger' : 'bg-success'">
+            {{ medicine.discontinued ? 'Yes' : 'No' }}
+          </span>
+        </td>
         <td>
           <a
             [routerLink]="['/admin/update-medicine', medicine.medicineId]"
@@ -34,4 +60,30 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- 🛑 No Data -->
+  <ng-template #noData>
+    <div class="alert alert-warning text-center">No medicines found.</div>
+  </ng-template>
+
+  <!-- 📑 Pagination -->
+  <nav *ngIf="filteredMedicines.length > pageSize" class="mt-3">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="page === 1">
+        <button class="page-link" (click)="goToPage(page - 1)">Previous</button>
+      </li>
+
+      <li
+        class="page-item"
+        *ngFor="let pg of [].constructor(totalPages); let i = index"
+        [class.active]="page === i + 1"
+      >
+        <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+      </li>
+
+      <li class="page-item" [class.disabled]="page === totalPages">
+        <button class="page-link" (click)="goToPage(page + 1)">Next</button>
+      </li>
+    </ul>
+  </nav>
 </div>

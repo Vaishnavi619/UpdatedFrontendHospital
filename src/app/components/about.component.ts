@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { BackButtonComponent } from './shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-about',
-  imports: [],
+  imports: [BackButtonComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })

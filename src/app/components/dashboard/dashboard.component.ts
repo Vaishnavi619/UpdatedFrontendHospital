@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { BackButtonComponent } from '../shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,BackButtonComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -35,5 +36,11 @@ export class DashboardComponent {
  {label:'Bills',link:'/patient/bills'}
 
  ]
+ constructor(private router: Router) {}
 
+  ngOnInit(): void {
+    if (this.role === 'SUPER_ADMIN') {
+      this.router.navigate(['/superadmin/dashboard']);
+    }
+  }
 }

@@ -7,7 +7,7 @@ import { Doctor } from '../models/doctor';
   providedIn: 'root'
 })
 export class DoctorService {
-  private baseUrl = 'http://localhost:8080/api/doctors';
+  private baseUrl = 'http://localhost:8081/api/doctors';
 
   constructor(private http: HttpClient) {}
 
@@ -46,7 +46,7 @@ export class DoctorService {
   }
 
   getAllPatients() {
-  return this.http.get<any[]>('http://localhost:8080/api/patients');
+  return this.http.get<any[]>('http://localhost:8081/api/patients');
 }
 
 }

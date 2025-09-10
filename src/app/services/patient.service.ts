@@ -7,7 +7,7 @@ import { Patient } from '../models/patient';
   providedIn: 'root'
 })
 export class PatientService {
-  private baseUrl = 'http://localhost:8080/api/patients';
+  private baseUrl = 'http://localhost:8081/api/patients';
 
   constructor(private http: HttpClient) {}
 
@@ -46,7 +46,7 @@ export class PatientService {
   }
 
   getAllDoctors() {
-  return this.http.get<any[]>('http://localhost:8080/api/doctors');
+  return this.http.get<any[]>('http://localhost:8081/api/doctors');
 }
 
 uploadPatients(file: File): Observable<string> {
@@ -60,7 +60,7 @@ uploadPatients(file: File): Observable<string> {
   formData.append('file', file);
 
   return this.http.post<any>(  // 👈 Make sure it's `any` to access response.data
-    'http://localhost:8080/api/patients/upload',
+    'http://localhost:8081/api/patients/upload',
     formData,
     { headers }
   ).pipe(
@@ -68,6 +68,19 @@ uploadPatients(file: File): Observable<string> {
   );
 }
 
+searchByName(name: string) {
+  return this.http.get<Patient[]>(`http://localhost:8081/api/patients/search/name/${name}`);
+}
 
+searchByPhone(phone: string) {
+  return this.http.get<Patient[]>(`http://localhost:8081/api/patients/search/phone/${phone}`);
+}
+
+searchByAddress(address: string) {
+  return this.http.get<Patient[]>(`http://localhost:8081/api/patients/search/address/${address}`);
+}
+searchPatientsByName(name: string): Observable<Patient[]> {
+    return this.http.get<Patient[]>(`${this.baseUrl}/search/name/${name}`);
+  }
 
 }

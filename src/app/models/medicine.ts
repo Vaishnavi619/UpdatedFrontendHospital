@@ -1,7 +1,11 @@
 export interface Medicine {
   medicineId: number;
   name: string;
-  description: string;
   price: number;
-  quantityLeft: number;
+  manufacturerName: string;
+  type: string;
+  packSizeLabel: string;
+  shortComposition1: string;
+  shortComposition2: string;
+  discontinued: boolean;   // ✅ changed from isDiscontinued → discontinued
 }

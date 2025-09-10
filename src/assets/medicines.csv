@@ -1,11 +1,20 @@
-name,description,price,quantityLeft
-Dolo 650,Fever and body pain relief,2.8,120
-Pantoprazole,Acidity and heartburn treatment,4.0,180
-Paracetamol,Common fever and mild pain reliever,1.5,200
-Amoxicillin,Bacterial infection antibiotic,5.0,150
-Cetrizine,Allergy and cold symptoms relief,1.2,300
-Azithromycin,Antibiotic for throat infections,10.0,90
-Ibuprofen,Pain relief and anti-inflammatory,3.5,100
-Ranitidine,Reduces stomach acid,2.0,250
-Vitamin C,Boosts immunity and prevents deficiency,1.8,500
-Metformin,Diabetes management,6.0,130
+name,price,manufacturerName,type,packSizeLabel,shortComposition1,shortComposition2,discontinued
+Augmentin 625 Duo Tablet,223.42,Glaxo SmithKline Pharmaceuticals Ltd,allopathy,strip of 10 tablets,Amoxycillin 500mg,Clavulanic Acid 125mg,false
+Azithral 500 Tablet,132.36,Alembic Pharmaceuticals Ltd,allopathy,strip of 5 tablets,Azithromycin 500mg,,false
+Ascoril LS Syrup,118,Glenmark Pharmaceuticals Ltd,allopathy,bottle of 100 ml Syrup,Ambroxol 30mg/5ml,Levosalbutamol 1mg/5ml,false
+Allegra 120mg Tablet,218.81,Sanofi India Ltd,allopathy,strip of 10 tablets,Fexofenadine 120mg,,false
+Avil 25 Tablet,10.96,Sanofi India Ltd,allopathy,strip of 15 tablets,Pheniramine 25mg,,false
+Allegra-M Tablet,241.48,Sanofi India Ltd,allopathy,strip of 10 tablets,Montelukast 10mg,Fexofenadine 120mg,false
+Amoxyclav 625 Tablet,223.27,Abbott,allopathy,strip of 10 tablets,Amoxycillin 500mg,Clavulanic Acid 125mg,false
+Azee 500 Tablet,132.38,Cipla Ltd,allopathy,strip of 5 tablets,Azithromycin 500mg,,false
+Atarax 25mg Tablet,85.5,Dr Reddy's Laboratories Ltd,allopathy,strip of 15 tablets,Hydroxyzine 25mg,,false
+Oms 20mg Capsule,45,Monokem Labs,Capsule,strip of 10 capsules,Omeprazole 20mg,,false
+Ofax DX Eye Drop,55,Alde Medi Impex Ltd,Eye Drop,packet of 10 ml,Ofloxacin 0.3% w/v,Dexamethasone 0.1% w/v,false
+Orlisis 60mg Tablet,169,Tycoon Pharmaceuticals Pvt Ltd,Tablet,strip of 10 tablets,Orlistat 60mg,,false
+Oxynal SP Tablet,47.26,Euphoric Pharmaceuticals Pvt Ltd,Tablet,strip of 10 tablets,Diclofenac 50mg,Paracetamol 325mg,false
+Olee 10mg Tablet MD,55.8,Tweet India Pharmaceuticals Pvt Ltd,Tablet,strip of 10 tablet md,Olanzapine 10mg,,false
+Omic 20mg Capsule,36,Tunic Healthcare,Capsule,strip of 10 capsules,Omeprazole 20mg,,false
+Ofnic 200mg Tablet,49,Tunic Healthcare,Tablet,strip of 10 tablets,Ofloxacin 200mg,,false
+Omicure 20mg Capsule,40,Balsons Pharmaceutical,Capsule,strip of 10 capsules,Omeprazole 20mg,,false
+Omedy 20mg Capsule,26,Zedip Formulations,Capsule,strip of 10 capsules,Omeprazole 20mg,,false
+Opraz D 10mg/20mg Capsule,67.5,Biosys Medisciences,Capsule,strip of 15 capsules,Domperidone 10mg,Omeprazole 20mg,false

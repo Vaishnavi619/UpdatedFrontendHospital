@@ -3,11 +3,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { BackButtonComponent } from '../../components/shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-update-doctor',
   templateUrl: './update-doctor.component.html',
-  imports:[RouterModule,ReactiveFormsModule,CommonModule]
+  imports:[RouterModule,ReactiveFormsModule,CommonModule,BackButtonComponent]
 })
 export class UpdateDoctorComponent implements OnInit {
   doctorForm!: FormGroup;
@@ -33,7 +34,7 @@ export class UpdateDoctorComponent implements OnInit {
   }
 
   loadDoctorData() {
-    this.http.get<any>(`http://localhost:8080/api/doctors/${this.doctorId}`).subscribe({
+    this.http.get<any>(`http://localhost:8081/api/doctors/${this.doctorId}`).subscribe({
       next: (res) => {
         const doctor = res.data;
         this.doctorForm.patchValue({
@@ -51,7 +52,7 @@ export class UpdateDoctorComponent implements OnInit {
     if (this.doctorForm.invalid) return;
 
     const updatedDoctor = this.doctorForm.value;
-    this.http.put(`http://localhost:8080/api/doctors/${this.doctorId}`, updatedDoctor).subscribe({
+    this.http.put(`http://localhost:8081/api/doctors/${this.doctorId}`, updatedDoctor).subscribe({
       next: () => {
         alert('Doctor updated successfully');
         this.router.navigate(['/admin/view-doctors']);

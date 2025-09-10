@@ -1,27 +1,24 @@
+<app-back-button></app-back-button>
 <div class="container py-4">
   <h2 class="text-center text-primary mb-4">Update Medicine</h2>
 
   <form [formGroup]="medicineForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow">
+    <!-- Name -->
     <div class="mb-3">
       <label for="name" class="form-label">Medicine Name</label>
       <input type="text" id="name" class="form-control" formControlName="name" />
     </div>
 
+    <!-- Price -->
     <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea id="description" class="form-control" formControlName="description"></textarea>
-    </div>
-
-    <!-- ✅ Price Field with Validation -->
-    <div class="mb-3">
-      <label for="price" class="form-label">Price</label>
+      <label for="price" class="form-label">Price (₹)</label>
       <input
         type="text"
         id="price"
         formControlName="price"
         class="form-control"
         pattern="^[1-9][0-9]*$"
-        maxlength="5"
+        maxlength="6"
         (keypress)="allowOnlyDigits($event)"
       />
       <div *ngIf="medicineForm.get('price')?.touched && medicineForm.get('price')?.invalid" class="text-danger mt-1">
@@ -30,25 +27,41 @@
       </div>
     </div>
 
-    <!-- ✅ Quantity Left Field with Validation -->
+    <!-- Manufacturer -->
     <div class="mb-3">
-      <label for="quantityLeft" class="form-label">Quantity Left</label>
-      <input
-        type="text"
-        id="quantityLeft"
-        formControlName="quantityLeft"
-        class="form-control"
-        pattern="^[1-9][0-9]*$"
-        maxlength="5"
-        (keypress)="allowOnlyDigits($event)"
-      />
-      <div *ngIf="medicineForm.get('quantityLeft')?.touched && medicineForm.get('quantityLeft')?.invalid" class="text-danger mt-1">
-        <div *ngIf="medicineForm.get('quantityLeft')?.errors?.['pattern']">Quantity must be a number and not start with 0.</div>
-        <div *ngIf="medicineForm.get('quantityLeft')?.errors?.['required']">Quantity is required.</div>
-      </div>
+      <label for="manufacturerName" class="form-label">Manufacturer</label>
+      <input type="text" id="manufacturerName" class="form-control" formControlName="manufacturerName" />
     </div>
 
+    <!-- Type -->
+    <div class="mb-3">
+      <label for="type" class="form-label">Type</label>
+      <input type="text" id="type" class="form-control" formControlName="type" />
+    </div>
 
+    <!-- Pack Size -->
+    <div class="mb-3">
+      <label for="packSizeLabel" class="form-label">Pack Size</label>
+      <input type="text" id="packSizeLabel" class="form-control" formControlName="packSizeLabel" />
+    </div>
+
+    <!-- Composition 1 -->
+    <div class="mb-3">
+      <label for="shortComposition1" class="form-label">Composition 1</label>
+      <input type="text" id="shortComposition1" class="form-control" formControlName="shortComposition1" />
+    </div>
+
+    <!-- Composition 2 -->
+    <div class="mb-3">
+      <label for="shortComposition2" class="form-label">Composition 2</label>
+      <input type="text" id="shortComposition2" class="form-control" formControlName="shortComposition2" />
+    </div>
+
+    <!-- Discontinued -->
+    <div class="mb-3 form-check">
+      <input type="checkbox" id="isDiscontinued" class="form-check-input" formControlName="isDiscontinued" />
+      <label for="isDiscontinued" class="form-check-label">Discontinued</label>
+    </div>
 
     <button type="submit" class="btn btn-success w-100" [disabled]="!medicineForm.valid">Update</button>
   </form>

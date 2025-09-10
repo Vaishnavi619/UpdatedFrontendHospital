@@ -7,7 +7,7 @@ import { Prescription } from '../models/Prescription';
   providedIn: 'root'
 })
 export class PrescriptionService {
-  private baseUrl = 'http://localhost:8080/api/prescriptions';
+  private baseUrl = 'http://localhost:8081/api/prescriptions';
 
   constructor(private http: HttpClient) {}
 
@@ -46,7 +46,7 @@ getPrescriptionsForLoggedInPatient(): Observable<any> {
   // ✅ Get all prescriptions
 getAllPrescriptions(): Observable<{ message: string; statuscode: number; data: Prescription[] }> {
   return this.http.get<{ message: string; statuscode: number; data: Prescription[] }>(
-    'http://localhost:8080/api/prescriptions',
+    'http://localhost:8081/api/prescriptions',
     {
       headers: new HttpHeaders({
         Authorization: `Bearer ${localStorage.getItem('token')}`,

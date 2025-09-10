@@ -1,6 +1,15 @@
+<app-back-button></app-back-button>
 <div class="container py-4">
   <h3 class="text-center text-primary mb-4">Your Prescriptions</h3>
-
+  <div class="d-flex justify-content-end mb-3">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="🔍 Search prescriptions..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="currentPage = 1"
+    />
+  </div>
   <div *ngIf="prescriptions.length > 0; else noPrescriptions">
     <table class="table table-bordered table-striped text-center">
       <thead class="table-dark">
@@ -18,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let prescription of prescriptions">
+         <tr *ngFor="let prescription of paginatedPrescriptions; let i = index">
           <td>{{ prescription.prescriptionId }}</td>
           <td>{{ prescription.diagnosis }}</td>
           <td>{{ prescription.advice || '-' }}</td>
@@ -32,6 +41,15 @@
         </tr>
       </tbody>
     </table>
+     <div class="text-center mt-3">
+      <button class="btn btn-outline-secondary me-2" (click)="prevPage()" [disabled]="currentPage === 1">
+        ← Prev
+      </button>
+      <span class="fw-semibold">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="btn btn-outline-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next →
+      </button>
+    </div>
   </div>
 
   <ng-template #noPrescriptions>

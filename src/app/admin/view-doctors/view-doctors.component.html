@@ -1,35 +1,78 @@
+<app-back-button></app-back-button>
+
 <div class="container py-4">
   <h2 class="text-center text-info mb-4">List of Doctors</h2>
 
-  <table class="table table-bordered table-striped">
-    <thead class="table-info text-center">
-      <tr>
-        <th>Sl No</th>
-        <th>Doctor Name</th>
-        <th>Specialization</th>
-        <th>Experience</th>
-        <th>Timings</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody class="text-center">
-      <tr *ngFor="let doctor of doctors; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ doctor.doctorName }}</td>
-        <td>{{ doctor.specialization }}</td>
-        <td>{{ doctor.experience }}</td>
-        <td>{{ doctor.timings }}</td>
-        <td>
-          <button class="btn btn-warning btn-sm me-2"
-                  [routerLink]="['/admin/update-doctor', doctor.doctorId]">
-            Update
+  <div *ngIf="doctors.length === 0" class="alert alert-info text-center">
+    No doctors available.
+  </div>
+<div class="d-flex justify-content-end mb-3">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="🔍 Search doctors..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="page = 1"
+    />
+  </div>
+  <div *ngIf="doctors.length > 0" class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-info text-center">
+        <tr>
+          <th>Sl No</th>
+          <th>Doctor Name</th>
+          <th>Specialization</th>
+          <th>Experience</th>
+          <th>Timings</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let doctor of paginatedDoctors; let i = index">
+          <td>{{ (page - 1) * pageSize + i + 1 }}</td>
+          <td>{{ doctor.doctorName }}</td>
+          <td>{{ doctor.specialization }}</td>
+          <td>{{ doctor.experience }}</td>
+          <td>{{ doctor.timings }}</td>
+          <td>
+            <button class="btn btn-info" (click)="setAvailability(doctor.doctorId)">
+  Set Availability
+</button>
+
+            <button class="btn btn-warning btn-sm me-2"
+                    [routerLink]="['/admin/update-doctor', doctor.doctorId]">
+              Update
+            </button>
+            <button class="btn btn-danger btn-sm"
+                    (click)="deleteDoctor(doctor.doctorId)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <nav *ngIf="doctors.length > pageSize" class="mt-3">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="page === 1">
+          <button class="page-link" (click)="goToPage(page - 1)">Previous</button>
+        </li>
+
+        <li
+          class="page-item"
+          *ngFor="let pg of [].constructor(totalPages); let i = index"
+          [class.active]="page === i + 1"
+        >
+          <button class="page-link" (click)="goToPage(i + 1)">
+            {{ i + 1 }}
           </button>
-          <button class="btn btn-danger btn-sm"
-                  (click)="deleteDoctor(doctor.doctorId)">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </li>
+
+        <li class="page-item" [class.disabled]="page === totalPages">
+          <button class="page-link" (click)="goToPage(page + 1)">Next</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>

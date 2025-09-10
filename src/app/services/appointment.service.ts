@@ -7,7 +7,7 @@ import { Appointment } from '../models/appointment'; // ✅ Import Appointment m
   providedIn: 'root'
 })
 export class AppointmentService {
-  private baseUrl = 'http://localhost:8080/api/appointments';
+  private baseUrl = 'http://localhost:8081/api/appointments';
 
   constructor(private http: HttpClient) {}
 
@@ -37,7 +37,7 @@ export class AppointmentService {
   // (Optional) Add a getAllAppointments() method if needed
   getAllAppointments() {
   const token = localStorage.getItem('token');
-  return this.http.get<any[]>('http://localhost:8080/api/appointments', {
+  return this.http.get<any[]>('http://localhost:8081/api/appointments', {
     headers: { Authorization: `Bearer ${token}` }
   });
 }
@@ -66,6 +66,12 @@ getAppointmentsForLoggedInPatient(): Observable<{ statuscode: number, message: s
   );
 }
 
+getAvailableSlots(doctorId: number, date: string): Observable<any[]> {
+  return this.http.get<any[]>(
+    `http://localhost:8081/api/doctor-availability/${doctorId}/slots?date=${date}`,
+    { headers: this.getAuthHeaders() }
+  );
+}
 
 
 

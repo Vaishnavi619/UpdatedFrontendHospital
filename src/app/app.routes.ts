@@ -39,6 +39,9 @@ import { PatientViewAppointmentComponent } from './components/patient-view-appoi
 import { PatientViewPrescriptionComponent } from './components/patient-view-prescription/patient-view-prescription.component';
 import { PatientViewBillComponent } from './components/patient-view-bill/patient-view-bill.component';
 import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
+import { SuperadminDashboardComponent } from './components/superadmin-dashboard/superadmin-dashboard.component';
+import { ReportDashboardComponent } from './components/admin/report-dashboard/report-dashboard.component';
+import { DoctorAvailabilityComponent } from './components/doctor-availability/doctor-availability.component';
 export const routes: Routes = [
 
   { path: '', component: HomeComponent },
@@ -92,5 +95,12 @@ export const routes: Routes = [
   component: PatientViewBillComponent
 },
 
-  { path: 'verify-otp', component: VerifyOtpComponent }
+  { path: 'verify-otp', component: VerifyOtpComponent },
+  {path: 'superadmin/dashboard',
+  component: SuperadminDashboardComponent},
+  { path: 'admin/reports', component: ReportDashboardComponent },
+
+  { path: 'doctor-availability/:id', component: DoctorAvailabilityComponent }
+
+  
 ];

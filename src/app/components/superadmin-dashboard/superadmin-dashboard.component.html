@@ -1,0 +1,44 @@
+
+<app-back-button></app-back-button>
+
+
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
+
+<div class="container py-4">
+  <h2 class="text-center text-primary mb-4">Super Admin Dashboard</h2>
+
+  <div class="row g-4 text-center">
+
+    <div class="col-md-4">
+      <a [routerLink]="['/admin/doctor-dashboard']" class="btn btn-outline-success w-100">Manage Doctors</a>
+    </div>
+
+    <div class="col-md-4">
+      <a [routerLink]="['/patients']" class="btn btn-outline-info w-100">Manage Patients</a>
+    </div>
+
+    <div class="col-md-4">
+      <a [routerLink]="['/appointments']" class="btn btn-outline-dark w-100">Manage Appointments</a>
+    </div>
+
+    <div class="col-md-4">
+      <a [routerLink]="['/admin/medicine-dashboard']" class="btn btn-outline-warning w-100">Manage Medicines</a>
+    </div>
+
+    <div class="col-md-4">
+      <a [routerLink]="['/prescriptions']" class="btn btn-outline-danger w-100">View Prescriptions</a>
+    </div>
+
+    <div class="col-md-4">
+      <a [routerLink]="['/manage-bill']" class="btn btn-outline-dark w-100">View Bills</a>
+    </div>
+
+    <!-- ✅ New Reports Link -->
+    <div class="col-md-4">
+      <a [routerLink]="['/admin/reports']" class="btn btn-outline-primary w-100">📈 View Reports</a>
+    </div>
+
+  </div>
+</div>

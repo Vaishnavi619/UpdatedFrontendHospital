@@ -4,11 +4,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PatientService } from '../../services/patient.service';
+import { BackButtonComponent } from '../shared/back-button/back-button.component';
 
 @Component({
   selector: 'app-patient',
   templateUrl: './patient.component.html',
-  imports:[CommonModule,RouterModule,]
+  imports:[CommonModule,RouterModule,BackButtonComponent]
 })
 export class PatientComponent {
   constructor(private http: HttpClient,private patientService:PatientService) {}

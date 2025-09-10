@@ -1,5 +1,15 @@
+<app-back-button></app-back-button>
 <div class="container py-4">
   <h2 class="text-center text-dark fw-bold mb-4">All Appointments</h2>
+<div class="d-flex justify-content-end mb-3">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="🔍 Search appointments..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="currentPage = 1"
+    />
+  </div>
 
   <div class="table-responsive">
     <table class="table table-bordered table-striped align-middle text-center">
@@ -11,20 +21,19 @@
           <th>Date</th>
           <th>Time</th>
           <th>Reason</th>
-          <th>Actions</th> <!-- ✅ Add column for actions -->
+          <th>Actions</th>
         </tr>
       </thead>
 
-      <tbody *ngIf="appointments && appointments.length > 0">
-        <tr *ngFor="let appt of appointments; let i = index">
-          <td>{{ i + 1 }}</td>
+      <tbody *ngIf="paginatedAppointments.length > 0">
+        <tr *ngFor="let appt of paginatedAppointments; let i = index">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
           <td>{{ appt.doctor?.doctorName }}</td>
           <td>{{ appt.patient?.fullName }}</td>
           <td>{{ appt.appointmentDate }}</td>
           <td>{{ appt.appointmentTime }}</td>
           <td>{{ appt.reason }}</td>
           <td>
-            <!-- ✅ Auto route with query param -->
             <button class="btn btn-sm btn-primary"
                     [routerLink]="['/doctor/prescriptions/create']"
                     [queryParams]="{ appointmentId: appt.appointmentId }">
@@ -40,5 +49,16 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Pagination controls -->
+  <div *ngIf="appointments.length > pageSize" class="text-center mt-3">
+    <button class="btn btn-outline-secondary me-2" (click)="prevPage()" [disabled]="currentPage === 1">
+      ← Prev
+    </button>
+    <span class="fw-semibold">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="btn btn-outline-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next →
+    </button>
   </div>
 </div>

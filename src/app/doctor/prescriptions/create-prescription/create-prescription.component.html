@@ -1,78 +1,76 @@
+<app-back-button></app-back-button>
 <div class="container py-4">
   <h2 class="text-center text-success mb-4">Create Prescription</h2>
 
   <form [formGroup]="prescriptionForm" (ngSubmit)="onSubmit()" class="w-50 mx-auto needs-validation">
 
-    <!-- Diagnosis -->
     <div class="mb-3">
       <label class="form-label">Diagnosis *</label>
       <input type="text" class="form-control" formControlName="diagnosis">
-      <div class="text-danger" *ngIf="prescriptionForm.get('diagnosis')?.touched && prescriptionForm.get('diagnosis')?.invalid">
-        Diagnosis is required
-      </div>
     </div>
 
-    <!-- Advice -->
     <div class="mb-3">
       <label class="form-label">Advice</label>
       <textarea class="form-control" formControlName="advice" rows="2"></textarea>
     </div>
 
-    <!-- Date -->
     <div class="mb-3">
       <label class="form-label">Date *</label>
       <input type="date" class="form-control" formControlName="date">
     </div>
 
-    <!-- Medicine Selection (No Ctrl Needed) -->
-    <div class="mb-3">
-      <label class="form-label">Select Medicines *</label>
-      <div class="d-flex flex-wrap gap-2">
-        <button type="button" class="btn btn-outline-primary btn-sm"
-                *ngFor="let med of medicines"
-                (click)="addMedicine(med)">
-          {{ med.name }} (₹{{ med.price }})
+    <div class="form-group mb-3">
+      <label for="medicines" class="form-label">Select Medicines</label>
+      <div class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="medicineDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ selectedMedicines.length > 0 ? getSelectedMedicineNames() : 'Choose medicines' }}
         </button>
+        <ul class="dropdown-menu w-100 p-2" aria-labelledby="medicineDropdown" style="max-height: 250px; overflow-y: auto;">
+          <li *ngFor="let med of medicines">
+            <div class="form-check">
+              <input 
+                class="form-check-input"
+                type="checkbox"
+                [id]="'med' + med.medicineId"
+                [checked]="isSelected(med)"
+                (change)="toggleMedicine(med, $event)"
+              />
+              <label class="form-check-label" [for]="'med' + med.medicineId">
+                {{ med.name }} (₹{{ med.price }})
+              </label>
+            </div>
+          </li>
+          <li *ngIf="medicines.length === 0" class="text-center text-muted p-2">
+            No medicines found.
+          </li>
+        </ul>
       </div>
-      <small class="text-muted">Click buttons to select medicines</small>
+    </div>
+    
+    <div class="mb-3">
+        <div *ngIf="selectedMedicines.length > 0" class="d-flex flex-wrap gap-2">
+            <span *ngFor="let med of selectedMedicines" class="badge bg-primary d-flex align-items-center">
+                {{ med.name }}
+                <button type="button" class="btn-close btn-close-white ms-2" aria-label="Remove" (click)="removeMedicine(med.medicineId)"></button>
+            </span>
+        </div>
     </div>
 
-    <!-- Selected Medicines as Pills -->
-    <div class="mb-3" *ngIf="selectedMedicines.length > 0">
-      <label class="form-label">Selected Medicines:</label>
-      <div class="d-flex flex-wrap gap-2">
-        <span *ngFor="let med of selectedMedicines" class="badge bg-success rounded-pill">
-          {{ med.name }}
-          <button type="button" class="btn-close btn-close-white btn-sm ms-2" (click)="removeMedicine(med.medicineId)"></button>
-        </span>
-      </div>
-    </div>
-
-    <!-- Dosage -->
     <div class="mb-3">
       <label class="form-label">Dosage (e.g., 2)</label>
       <input type="text" class="form-control" formControlName="dosage">
-      <div class="text-danger" *ngIf="prescriptionForm.get('dosage')?.touched && prescriptionForm.get('dosage')?.invalid">
-        Dosage is required
-      </div>
     </div>
 
-    <!-- Duration -->
     <div class="mb-3">
       <label class="form-label">Duration (in days) *</label>
       <input type="number" class="form-control" formControlName="durationDays" min="1">
-      <div class="text-danger" *ngIf="prescriptionForm.get('durationDays')?.touched && prescriptionForm.get('durationDays')?.invalid">
-        Duration must be at least 1 day
-      </div>
     </div>
 
-    <!-- Submit -->
-    <button type="submit" class="btn btn-success w-100" [disabled]="prescriptionForm.invalid">
+    <button type="submit" class="btn btn-success w-100" [disabled]="prescriptionForm.invalid || selectedMedicines.length === 0">
       Submit Prescription
     </button>
   </form>
 
-  <!-- ✅ Toast -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3" *ngIf="showToast">
     <div class="toast align-items-center text-bg-success border-0 show">
       <div class="d-flex">

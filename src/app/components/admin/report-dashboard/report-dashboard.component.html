@@ -1,0 +1,26 @@
+<app-back-button></app-back-button>
+<div class="container mt-4">
+  <h2 class="text-center text-primary fw-bold mb-4">📊 Admin Reports</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="text-center">Appointments Per Month</h4>
+      <canvas
+        baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="barChartType">
+      </canvas>
+    </div>
+
+    <div class="col-md-6">
+      <h4 class="text-center">Bill Payment Status</h4>
+      <canvas
+        baseChart
+        [data]="pieChartData"
+        [options]="pieChartOptions"
+        [type]="pieChartType">
+      </canvas>
+    </div>
+  </div>
+</div>

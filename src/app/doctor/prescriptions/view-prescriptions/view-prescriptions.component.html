@@ -1,67 +1,80 @@
+<app-back-button></app-back-button>
 <div class="container py-4">
   <h3 class="text-center text-primary mb-4">All Prescriptions</h3>
 
-  <div *ngIf="prescriptions.length > 0; else noPrescriptions">
-    <table class="table table-bordered table-hover text-center">
+  <!-- 🔍 Search -->
+  <div class="d-flex justify-content-end mb-3">
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="🔍 Search prescriptions..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="currentPage = 1"
+    />
+  </div>
+
+  <!-- 📋 Table -->
+  <div class="table-responsive">
+    <table class="table table-sm table-bordered table-striped align-middle text-center shadow-sm" style="font-size: 0.85rem;">
       <thead class="table-dark">
         <tr>
-          <th>ID</th>
+          <th>#</th>
           <th>Diagnosis</th>
           <th>Advice</th>
           <th>Date</th>
-          <th>Medicine Names</th>  <!-- ✅ UPDATED -->
-          <th>Total Price (₹)</th> <!-- ✅ UPDATED -->
+          <th>Medicines</th>
+          <th>Price (₹)</th>
           <th>Dosage</th>
-          <th>Duration (Days)</th>
-          <th>Appointment ID</th>
-          <th>Patient Name</th>
+          <th>Days</th>
+          <th>App.ID</th>
+          <th>Patient</th>
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let prescription of prescriptions">
-          <td>{{ prescription.prescriptionId }}</td>
+
+      <tbody *ngIf="paginatedPrescriptions.length > 0; else noPrescriptions">
+        <tr *ngFor="let prescription of paginatedPrescriptions; let i = index">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
           <td>{{ prescription.diagnosis }}</td>
           <td>{{ prescription.advice || '-' }}</td>
           <td>{{ prescription.date }}</td>
-
-          <!-- ✅ Medicine names shown clearly -->
-          <td>
-            <span *ngIf="prescription.medicineName; else noMeds">
-              {{ prescription.medicineName }}
-            </span>
-            <ng-template #noMeds>N/A</ng-template>
-          </td>
-
-          <!-- ✅ Total price formatted -->
+          <td>{{ prescription.medicineName || 'N/A' }}</td>
           <td>₹{{ prescription.medicinePrice || 0 }}</td>
-
           <td>{{ prescription.dosage }}</td>
           <td>{{ prescription.durationDays }}</td>
           <td>{{ prescription.appointment?.appointmentId }}</td>
           <td>{{ prescription.appointment?.patient?.fullName || 'N/A' }}</td>
-
-          <!-- ✅ Action buttons -->
           <td>
-            <button 
-              class="btn btn-sm btn-warning me-2"
-              [routerLink]="['/doctor/prescriptions/update', prescription.prescriptionId]">
-              Update
-            </button>
-
-            <button class="btn btn-outline-danger"
-              type="button"
-              (click)="deletePrescription(prescription.prescriptionId)">
-              Delete
-            </button>
+            <div class="d-flex flex-column gap-1">
+              <button class="btn btn-warning btn-sm"
+                      [routerLink]="['/doctor/prescriptions/update', prescription.prescriptionId]">
+                update
+              </button>
+              <button class="btn btn-outline-danger btn-sm"
+                      (click)="deletePrescription(prescription.prescriptionId)">
+                delete
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
+  <!-- 📄 Pagination -->
+  <div class="text-center mt-3" *ngIf="filteredPrescriptions.length > pageSize">
+    <button class="btn btn-outline-secondary me-2" (click)="prevPage()" [disabled]="currentPage === 1">
+      ← Prev
+    </button>
+    <span class="fw-semibold">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="btn btn-outline-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next →
+    </button>
+  </div>
+
+  <!-- ❗ No Data -->
   <ng-template #noPrescriptions>
-    <div class="alert alert-warning text-center">
+    <div class="alert alert-warning text-center mt-4">
       No prescriptions found.
     </div>
   </ng-template>

@@ -1,20 +1,30 @@
+<app-back-button></app-back-button>
 <div class="container py-5">
   <h2 class="text-center text-primary mb-4">Schedule Appointment</h2>
-  <form (ngSubmit)="onSubmit()">
-    <!-- Doctor Dropdown -->
-     <label for="doctorId">Select Doctor</label>
-<select class="form-select" [(ngModel)]="appointment.doctor.doctorId" name="doctorId" required>
-  <option value="" disabled selected>Select Doctor</option>
-  <option *ngFor="let doctor of doctors" [value]="doctor.doctorId">
-    {{ doctor.doctorName }}
-  </option>
-</select>
 
-    <!-- 🔽 Patient Dropdown -->
+  <form (ngSubmit)="onSubmit()">
+    <!-- Doctor -->
     <div class="mb-3">
-      <label for="patientId">SelectPatient</label>
-      <select class="form-select" [(ngModel)]="appointment.patient.patientId"
- name="patientId" required>
+      <label for="doctorId">Select Doctor</label>
+      <select class="form-select"
+              [(ngModel)]="appointment.doctor.doctorId"
+              name="doctorId"
+              required
+              (change)="onDoctorOrDateChange()">
+        <option value="" disabled selected>Select Doctor</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor.doctorId">
+          {{ doctor.doctorName }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Patient -->
+    <div class="mb-3">
+      <label for="patientId">Select Patient</label>
+      <select class="form-select"
+              [(ngModel)]="appointment.patient.patientId"
+              name="patientId"
+              required>
         <option value="" disabled selected>Select Patient</option>
         <option *ngFor="let patient of patients" [value]="patient.patientId">
           {{ patient.fullName }}
@@ -22,31 +32,52 @@
       </select>
     </div>
 
-   <div class="mb-3">
-  <label for="appointmentDate">Appointment Date</label>
-  <input
-    type="date"
-    class="form-control"
-    [(ngModel)]="appointment.appointmentDate"
-    name="appointmentDate"
-    [min]="todayDate"
-    required
-  />
-</div>
-
-
-    <!-- ⏰ Appointment Time -->
+    <!-- Date -->
     <div class="mb-3">
-      <label for="appointmentTime">Appointment Time</label>
-      <input type="time" class="form-control" [(ngModel)]="appointment.appointmentTime" name="appointmentTime" required>
+      <label for="appointmentDate">Appointment Date</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="appointment.appointmentDate"
+        name="appointmentDate"
+        [min]="todayDate"
+        required
+        (change)="onDoctorOrDateChange()"
+      />
     </div>
 
-    <!-- 📝 Reason -->
+    <!-- Slots (new) -->
+   <button
+  type="button"
+  class="btn"
+  [ngClass]="slot.startTime === appointment.startTime ? 'btn-primary' : 'btn-outline-primary'"
+  *ngFor="let slot of availableSlots"
+  (click)="selectSlot(slot)"
+>
+  {{ slot.startTime }} - {{ slot.endTime }}
+</button>
+
+
+    <!-- No slots message -->
+    <div class="mb-3"
+         *ngIf="appointment.doctor.doctorId && appointment.appointmentDate && availableSlotsLoaded && availableSlots.length === 0">
+      <div class="alert alert-warning m-0">
+        No slots available for the selected date.
+      </div>
+    </div>
+
+    <!-- Reason -->
     <div class="mb-3">
       <label for="reason">Reason</label>
       <textarea class="form-control" rows="3" [(ngModel)]="appointment.reason" name="reason" required></textarea>
     </div>
 
-    <button type="submit" class="btn btn-success w-100">Submit</button>
+   <button 
+  type="submit" 
+  class="btn btn-success w-100"
+  [disabled]="!appointment.appointmentDate || !appointment.startTime || !appointment.endTime">
+  Submit
+</button>
+
   </form>
 </div>
